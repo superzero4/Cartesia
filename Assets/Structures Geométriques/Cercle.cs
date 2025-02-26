@@ -2,10 +2,10 @@ using UnityEngine;
 
 public struct Cercle
 {
-    public Point2D center;
+    public Point center;
     public float radius;
 
-    public Cercle(Point2D center, float radius)
+    public Cercle(Point center, float radius)
     {
         this.center = center;
         this.radius = radius;

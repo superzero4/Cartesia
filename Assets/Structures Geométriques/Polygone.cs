@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public struct Polygon
+public struct Polygone
 {
-    public List<Point2D> sommets; // Liste des sommets du polygone
+    public List<Point> sommets; // Liste des sommets du polygone
 
-    public Polygon(List<Point2D> sommets)
+    public Polygone(List<Point> sommets)
     {
-        this.sommets = new List<Point2D>(sommets);
+        this.sommets = new List<Point>(sommets);
     }
 
     // Calculer le périmètre du polygone
@@ -18,8 +18,8 @@ public struct Polygon
         float perimeter = 0;
         for (int i = 0; i < sommets.Count; i++)
         {
-            Point2D current = sommets[i];
-            Point2D next = sommets[(i + 1) % sommets.Count]; 
+            Point current = sommets[i];
+            Point next = sommets[(i + 1) % sommets.Count]; 
 
             perimeter += Vector2.Distance(new Vector2(current.x, current.y), new Vector2(next.x, next.y));
         }

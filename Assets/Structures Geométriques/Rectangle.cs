@@ -2,10 +2,10 @@ using UnityEngine;
 
 public struct Rectangle
 {
-    public Point2D topLeft;
+    public Point topLeft;
     public float width, height;
 
-    public Rectangle(Point2D topLeft, float width, float height)
+    public Rectangle(Point topLeft, float width, float height)
     {
         this.topLeft = topLeft;
         this.width = width;

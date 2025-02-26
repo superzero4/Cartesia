@@ -2,9 +2,9 @@ using UnityEngine;
 
 public struct Segment
 {
-    public Point2D start, end;
+    public Point start, end;
 
-    public Segment(Point2D start, Point2D end)
+    public Segment(Point start, Point end)
     {
         this.start = start;
         this.end = end;
