@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
+[Serializable]
 public struct Polygone
 {
     public List<Point> sommets; // Liste des sommets du polygone
@@ -20,8 +22,8 @@ public struct Polygone
         {
             Point current = sommets[i];
             Point next = sommets[(i + 1) % sommets.Count]; 
-
-            perimeter += Vector2.Distance(new Vector2(current.x, current.y), new Vector2(next.x, next.y));
+            
+            perimeter += current.Distance(next);
         }
         return perimeter;
     }
