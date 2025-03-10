@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Manipulator : MonoBehaviour
 {
+    [SerializeField] private Geometries _geom;
     private PointRenderer _point;
     private UnityEngine.XR.InputDevice device;
 
@@ -23,20 +24,28 @@ public class Manipulator : MonoBehaviour
             Debug.Log("Found more than one left hand!");
         }
     }
-
+    private bool _release;
     private void Update()
     {
-        var posi = transform.position;
-        posi.x = Mathf.Sin(Time.time) * 2;
-        transform.position = posi;
+
         Debug.Log("Point : " + (_point != null));
         if (Input.GetKey(KeyCode.Space) || VRInput())
         {
+            var pos = transform.position;
             if (_point != null)
             {
-                var pos = transform.position;
                 _point.Data.Set(pos.x, pos.y, pos.z);
             }
+            else if(_release)
+            {
+                _geom.Points.Add(new Point(pos.x, pos.y, pos.z));
+                _geom.AddIndex(_geom.Polygones.Count-1, _geom.Points.Count - 1);
+                _release = false;
+            }
+        }
+        else
+        {
+            _release = true;
         }
     }
 

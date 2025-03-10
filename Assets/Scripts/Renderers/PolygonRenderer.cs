@@ -32,9 +32,15 @@ namespace Renderers
                 vectices[i] = Data.sommets[i].ToVector3();
                 center += vectices[i];
                 //We draw a triangle using, center vertex (not currently calculated but we know we'll append it at the end), current vertex and next vertex
-                triangles[i * 3] = i;
-                triangles[i * 3+1] = (i+1)%initialCount;
-                triangles[i * 3+2] = initialCount;
+                var v1 = i;
+                var v2 = (i + 1) % initialCount;
+                var v3 = initialCount;
+                triangles[i * 3 + 0] = v1;
+                triangles[i * 3 + 1] = v2;
+                triangles[i * 3 + 2] = v3;
+                
+                
+                
             }
             //Gravity center, we assume the polygon is convex
             vectices[initialCount] = center / initialCount;

@@ -17,7 +17,7 @@ public class Geometries : ScriptableObject
     [Serializable]
     private class Indexes
     {
-        public int[] indexes;
+        public List<int> indexes;
     }
 
     private List<Segment> _segments = null;
@@ -32,8 +32,12 @@ public class Geometries : ScriptableObject
     }
 
     //TODO add some kind of dirty on the _lines list to ensure the segment list are updated properly
-    public List<Segment> Segments => _segments == null || _segments.Count == 0 ? GenerateSegments() : _segments;
-    public List<Polygone> Polygones => _polygones == null || _polygones.Count == 0 ? GeneratePolygones() : _polygones;
+    public List<Segment> Segments =>  GenerateSegments();
+    public List<Polygone> Polygones =>  GeneratePolygones();
+    public void AddIndex(int polygon, int newIndex)
+    {
+        _polygons[polygon].indexes.Add(newIndex);
+    }
 
     private List<Polygone> GeneratePolygones()
     {
