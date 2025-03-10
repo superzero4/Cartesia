@@ -20,7 +20,7 @@ namespace Renderers
             set => _data = value;
         }
 
-        public void SetView()
+        public void RefreshView()
         {
             Mesh mesh = new Mesh();
             int initialCount = Data.sommets.Count;

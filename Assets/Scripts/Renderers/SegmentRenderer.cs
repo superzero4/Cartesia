@@ -18,13 +18,13 @@ namespace Renderers
             set => _data = value;
         }
 
-        public void SetView()
+        public void RefreshView()
         {
             _lineRenderer.SetPositions(new Vector3[] { Data.start.ToVector3(), Data.end.ToVector3() });
             _start.Data = Data.start;
-            _start.SetView();
+            _start.RefreshView();
             _end.Data = Data.end;
-            _end.SetView();
+            _end.RefreshView();
             TogglePointVisibility(_showPoints);
         }
 

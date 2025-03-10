@@ -3,23 +3,16 @@ using UnityEngine;
 
 namespace Renderers
 {
-    public class PointRenderer : MonoBehaviour,IRenderer<Point>
+    public class PointRenderer : MonoRenderer<Point>
     {
         [SerializeField] private GameObject _root;
-        private Point _data;
 
-        public void SetView()
+        public override void RefreshView()
         {
             _root.transform.position = Data.ToVector3();
         }
 
-        public Point Data
-        {
-            get => _data;
-            set => _data = value;
-        }
-
-        public void ToggleVisibility(bool visible)
+        public override void ToggleVisibility(bool visible)
         {
             _root.gameObject.SetActive(visible);
         }

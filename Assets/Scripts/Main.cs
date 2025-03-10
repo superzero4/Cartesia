@@ -31,7 +31,7 @@ public class Main : MonoBehaviour
             }
             _pointRenderers[i].ToggleVisibility(true);
             _pointRenderers[i].Data = _geometries.Points[i];
-            _pointRenderers[i].SetView();
+            _pointRenderers[i].RefreshView();
         }
         for(; i < _pointRenderers.Count; i++)
         {
@@ -48,7 +48,7 @@ public class Main : MonoBehaviour
             }
             _segmentRenderers[i].ToggleVisibility(true);
             _segmentRenderers[i].Data = segments[i];
-            _segmentRenderers[i].SetView();
+            _segmentRenderers[i].RefreshView();
         }
         for(; i < _segmentRenderers.Count; i++)
         {
@@ -65,7 +65,7 @@ public class Main : MonoBehaviour
             }
             _polygonRenderers[i].ToggleVisibility(true);
             _polygonRenderers[i].Data = polygons[i];
-            _polygonRenderers[i].SetView();
+            _polygonRenderers[i].RefreshView();
         }
     }
 }
