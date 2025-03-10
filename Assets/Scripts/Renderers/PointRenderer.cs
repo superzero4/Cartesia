@@ -6,10 +6,17 @@ namespace Renderers
     public class PointRenderer : MonoBehaviour,IRenderer<Point>
     {
         [SerializeField] private GameObject _root;
+        private Point _data;
 
-        public void SetView(Point data)
+        public void SetView()
         {
-            _root.transform.position = data.ToVector3();
+            _root.transform.position = Data.ToVector3();
+        }
+
+        public Point Data
+        {
+            get => _data;
+            set => _data = value;
         }
 
         public void ToggleVisibility(bool visible)

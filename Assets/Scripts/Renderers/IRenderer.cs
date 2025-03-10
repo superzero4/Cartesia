@@ -2,7 +2,15 @@
 {
     public interface IRenderer<T>
     {
-        public void SetView(T data);
+        T Data { get; set; }
+
+        public void SetView();
+
+        public void SetView(T Data)
+        {
+            this.Data = Data;
+            SetView();
+        }
         public void ToggleVisibility(bool visible);
     }
 }
