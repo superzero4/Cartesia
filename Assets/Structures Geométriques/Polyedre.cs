@@ -4,6 +4,12 @@ namespace Structures_Geométriques
 {
     public class Polyedre
     {
-        public List<Polygone> faces;
+        private List<Polygone> faces;
+        public Polyedre(IEnumerable<Polygone> faces)
+        {
+            this.faces = new List<Polygone>(faces);
+        }
+
+        public List<Polygone> Faces => faces;
     }
 }

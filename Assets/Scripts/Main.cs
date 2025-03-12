@@ -3,58 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Renderers;
+using Structures_Geométriques;
 using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    [SerializeField] private Geometries _geometries;
+    [Header("Settings")] [SerializeField] private bool _showPolygons;
 
-    [SerializeField] private PointRenderer _pointPrefab;
+    [Header("References")] [SerializeField]
+    private Geometries _geometries;
+
+    [Header("Prefabs")] [SerializeField] private PointRenderer _pointPrefab;
     [SerializeField] private SegmentRenderer _segmentPrefab;
     [SerializeField] private PolygonRenderer _polygonPrefab;
-    [SerializeField] private List<PointRenderer> _pointRenderers;
+    [SerializeField] private PolyedreRenderer _polyedrePrefab;
+    [Header("Existing")] [SerializeField] private List<PointRenderer> _pointRenderers;
     [SerializeField] private List<SegmentRenderer> _segmentRenderers;
     [SerializeField] private List<PolygonRenderer> _polygonRenderers;
+    [SerializeField] private List<PolyedreRenderer> _polyedreRenderers;
 
     private void Start()
     {
         _geometries.Init();
     }
 
-    private void Refresh<T, Rend>(List<Rend> renderers, IEnumerable<T> data, Rend prefab)
-        where Rend : MonoBehaviour, IRenderer<T>
-    {
-        int i = 0;
-        foreach (var d in data)
-        {
-            Rend renderer;
-            if (i >= renderers.Count)
-            {
-                Assert.IsTrue(i-renderers.Count == 0);
-                renderer = Instantiate(prefab, transform);
-                renderers.Add(renderer);
-            }
-            else
-            {
-                renderer = renderers[i];
-            }
-
-            renderer.ToggleVisibility(true);
-            renderer.Data = d;
-            renderer.RefreshView();
-            i++;
-        }
-
-        for (; i < _pointRenderers.Count; i++)
-        {
-            _pointRenderers[i].ToggleVisibility(false);
-        }
-    }
-
     private void Update()
     {
-        Refresh(_pointRenderers, _geometries.Points, _pointPrefab);
-        Refresh(_segmentRenderers, _geometries.Segments, _segmentPrefab);
-        Refresh(_polygonRenderers, _geometries.Polygones, _polygonPrefab);
+        IRenderer<Point>.InstantiateRenderersAndRefresh(_pointRenderers, _geometries.Points, _pointPrefab, transform);
+        IRenderer<Segment>.InstantiateRenderersAndRefresh(_segmentRenderers, _geometries.Segments, _segmentPrefab,
+            transform);
+        IRenderer<Polygone>.InstantiateRenderersAndRefresh(_polygonRenderers,
+            _showPolygons ? _geometries.Polygones : Enumerable.Empty<Polygone>(), _polygonPrefab,
+            transform);
+        IRenderer<Polyedre>.InstantiateRenderersAndRefresh(_polyedreRenderers, _geometries.Polyedres, _polyedrePrefab,
+            transform);
     }
 }
