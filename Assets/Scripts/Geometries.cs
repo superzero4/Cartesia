@@ -109,11 +109,13 @@ public class Geometries : ScriptableObject, IGeometries
         {
             indexedSegment.SetPoints(_points);
         }
+
         foreach (var indexedPolygon in _polygons)
         {
             indexedPolygon.SetPoints(_points);
         }
     }
+
     public void AddPoint(Point p)
     {
         _points.Add(p);
