@@ -38,8 +38,9 @@ public class Manipulator : MonoBehaviour
             }
             else if(_release)
             {
-                _geom.Points.Add(new Point(pos.x, pos.y, pos.z));
-                _geom.AddIndex(_geom.Polygones.Count-1, _geom.Points.Count - 1);
+                _geom.AddPoint(new Point(pos.x, pos.y, pos.z));
+                //TODO
+                _geom.AddIndex(_geom.PolygonesCount, _geom.PointsCount - 1);
                 _release = false;
             }
         }

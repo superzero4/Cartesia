@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using Renderers;
 using UnityEngine;
 
@@ -16,56 +18,43 @@ public class Main : MonoBehaviour
 
     private void Start()
     {
-        _geometries.ResetShapes();
+        _geometries.Init();
+    }
+
+    private void Refresh<T, Rend>(List<Rend> renderers, IEnumerable<T> data, Rend prefab)
+        where Rend : MonoBehaviour, IRenderer<T>
+    {
+        int i = 0;
+        foreach (var d in data)
+        {
+            Rend renderer;
+            if (i >= renderers.Count)
+            {
+                Assert.IsTrue(i-renderers.Count == 0);
+                renderer = Instantiate(prefab, transform);
+                renderers.Add(renderer);
+            }
+            else
+            {
+                renderer = renderers[i];
+            }
+
+            renderer.ToggleVisibility(true);
+            renderer.Data = d;
+            renderer.RefreshView();
+            i++;
+        }
+
+        for (; i < _pointRenderers.Count; i++)
+        {
+            _pointRenderers[i].ToggleVisibility(false);
+        }
     }
 
     private void Update()
     {
-        int i = 0;
-        for (; i < _geometries.Points.Count; i++)
-        {
-            if (i >= _pointRenderers.Count)
-            {
-                var rend = Instantiate(_pointPrefab, transform);
-                _pointRenderers.Add(rend);
-            }
-            _pointRenderers[i].ToggleVisibility(true);
-            _pointRenderers[i].Data = _geometries.Points[i];
-            _pointRenderers[i].RefreshView();
-        }
-        for(; i < _pointRenderers.Count; i++)
-        {
-            _pointRenderers[i].ToggleVisibility(false);
-        }
-        var segments = _geometries.Segments;
-        i = 0;
-        for (; i < segments.Count; i++)
-        {
-            if (i >= _segmentRenderers.Count)
-            {
-                var rend = Instantiate(_segmentPrefab, transform);
-                _segmentRenderers.Add(rend);
-            }
-            _segmentRenderers[i].ToggleVisibility(true);
-            _segmentRenderers[i].Data = segments[i];
-            _segmentRenderers[i].RefreshView();
-        }
-        for(; i < _segmentRenderers.Count; i++)
-        {
-            _segmentRenderers[i].ToggleVisibility(false);
-        }
-        var polygons = _geometries.Polygones;
-        i = 0;
-        for (; i < polygons.Count; i++)
-        {
-            if (i >= _polygonRenderers.Count)
-            {
-                var rend = Instantiate(_polygonPrefab, transform);
-                _polygonRenderers.Add(rend);
-            }
-            _polygonRenderers[i].ToggleVisibility(true);
-            _polygonRenderers[i].Data = polygons[i];
-            _polygonRenderers[i].RefreshView();
-        }
+        Refresh(_pointRenderers, _geometries.Points, _pointPrefab);
+        Refresh(_segmentRenderers, _geometries.Segments, _segmentPrefab);
+        Refresh(_polygonRenderers, _geometries.Polygones, _polygonPrefab);
     }
 }
