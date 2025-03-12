@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public struct Segment
+public class Segment
 {
     public Point start, end;
 

@@ -4,54 +4,142 @@ using UnityEngine;
 using System.Linq;
 using NUnit.Framework;
 
+public interface IGeometries
+{
+    IEnumerable<Point> Points { get; }
+    IEnumerable<Segment> Segments { get; }
+    IEnumerable<Polygone> Polygones { get; }
+}
+
+[Serializable]
+public abstract class Dirty<TSource, TResult>
+{
+    [SerializeField] private TSource data;
+
+    public TSource Data
+    {
+        set
+        {
+            data = value;
+            MarkDirty();
+        }
+        get => data;
+    }
+
+    //[SerializeField]
+    private TResult result;
+
+    //[SerializeField]
+    protected bool dirty = true;
+
+    public void MarkDirty()
+    {
+        dirty = true;
+    }
+
+    public void Edit(TSource newData)
+    {
+        data = newData;
+        MarkDirty();
+    }
+
+    public TResult Value => dirty ? (result = Compute(data)) : result;
+
+    public abstract TResult Compute(TSource tSource);
+}
+
+[Serializable]
+class IndexedPolygon : Dirty<Indexes, Polygone>
+{
+    List<Point> _points;
+
+    public void SetPoints(List<Point> points)
+    {
+        _points = points;
+    }
+
+    public override Polygone Compute(Indexes tSource)
+    {
+        return new Polygone(
+            tSource.indexes
+                .Where(index => index >= 0 && index < _points.Count)
+                .Select(index => _points[index]));
+    }
+}
+
+[Serializable]
+class IndexedSegment : Dirty<Vector2Int, Segment>
+{
+    List<Point> _points;
+
+    public void SetPoints(List<Point> points)
+    {
+        _points = points;
+    }
+
+    public override Segment Compute(Vector2Int tSource)
+    {
+        return new Segment(_points[tSource.x], _points[tSource.y]);
+    }
+}
+
+[Serializable]
+class Indexes
+{
+    public List<int> indexes;
+}
+
 [CreateAssetMenu(fileName = "Geometries", menuName = "Geometries")]
-public class Geometries : ScriptableObject
+public class Geometries : ScriptableObject, IGeometries
 {
     [Header("Data")] [SerializeField] private List<Point> _points;
 
     [SerializeField, Tooltip("Index of points in the list")]
-    private Vector2Int[] _lines;
+    private IndexedSegment[] _lines;
 
-    [SerializeField] private List<Indexes> _polygons;
+    [SerializeField, Tooltip("Index of points in the list")]
+    private List<IndexedPolygon> _polygons;
 
-    [Serializable]
-    private class Indexes
+    public IEnumerable<Point> Points => _points;
+    public int PointsCount => _points.Count;
+
+    public void Init()
     {
-        public int[] indexes;
+        foreach (var indexedSegment in _lines)
+        {
+            indexedSegment.SetPoints(_points);
+        }
+
+        foreach (var indexedPolygon in _polygons)
+        {
+            indexedPolygon.SetPoints(_points);
+        }
     }
 
-    private List<Segment> _segments = null;
-    private List<Polygone> _polygones = null;
-
-    public List<Point> Points => _points;
-
-    public void ResetShapes()
+    public void AddPoint(Point p)
     {
-        _segments = null;
-        _polygones = null;
+        _points.Add(p);
+        foreach (var indexedSegment in _lines)
+        {
+            indexedSegment.MarkDirty();
+        }
+
+        foreach (var indexedPolygon in _polygons)
+        {
+            indexedPolygon.MarkDirty();
+        }
     }
 
     //TODO add some kind of dirty on the _lines list to ensure the segment list are updated properly
-    public List<Segment> Segments => _segments == null || _segments.Count == 0 ? GenerateSegments() : _segments;
-    public List<Polygone> Polygones => _polygones == null || _polygones.Count == 0 ? GeneratePolygones() : _polygones;
+    public IEnumerable<Segment> Segments => _lines.Select(indexedSegment => indexedSegment.Value);
+    public int SegmentsCount => _lines.Length;
+    public IEnumerable<Polygone> Polygones => _polygons.Select(indexedPolygon => indexedPolygon.Value);
+    public int PolygonesCount => _polygons.Count;
 
-    private List<Polygone> GeneratePolygones()
+    public void AddIndex(int count, int i)
     {
-        return _polygones = _polygons
-            .Select(poly => new Polygone(
-                poly.indexes
-                    .Where(index => isIndexValid(index))
-                    .Select(index => _points[index]).ToList()))
-            .ToList();
-    }
-
-    private bool isIndexValid(int index) => index >= 0 && index < _points.Count;
-
-    private List<Segment> GenerateSegments()
-    {
-        return _segments = _lines
-            .Where(point => point.x != point.y && isIndexValid(point.x) && isIndexValid(point.y))
-            .Select(point => new Segment(_points[point.x], _points[point.y]))
-            .ToList();
+        var poly = _polygons[count];
+        poly.Data.indexes.Add(i);
+        poly.MarkDirty();
     }
 }

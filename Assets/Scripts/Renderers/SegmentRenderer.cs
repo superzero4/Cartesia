@@ -9,12 +9,22 @@ namespace Renderers
         [SerializeField] private bool _showPoints = false;
         [SerializeField] private PointRenderer _start;
         [SerializeField] private PointRenderer _end;
+        
+        private Segment _data;
 
-        public void SetView(Segment data)
+        public Segment Data
         {
-            _lineRenderer.SetPositions(new Vector3[] { data.start.ToVector3(), data.end.ToVector3() });
-            _start.SetView(data.start);
-            _end.SetView(data.end);
+            get => _data;
+            set => _data = value;
+        }
+
+        public void RefreshView()
+        {
+            _lineRenderer.SetPositions(new Vector3[] { Data.start.ToVector3(), Data.end.ToVector3() });
+            _start.Data = Data.start;
+            _start.RefreshView();
+            _end.Data = Data.end;
+            _end.RefreshView();
             TogglePointVisibility(_showPoints);
         }
 
