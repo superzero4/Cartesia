@@ -7,7 +7,7 @@ public struct Polygone
 {
     public List<Point> sommets; // Liste des sommets du polygone
 
-    public Polygone(List<Point> sommets)
+    public Polygone(IEnumerable<Point> sommets)
     {
         this.sommets = new List<Point>(sommets);
     }

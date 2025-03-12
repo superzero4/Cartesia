@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Renderers
 {
-    public class PointRenderer : MonoRenderer<Point>
+    public class PointRenderer : SerializedDataRenderer<Point>
     {
         [SerializeField] private GameObject _root;
 

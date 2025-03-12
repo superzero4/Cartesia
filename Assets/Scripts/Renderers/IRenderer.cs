@@ -18,7 +18,7 @@ namespace Renderers
         public void ToggleVisibility(bool visible);
     }
 
-    public abstract class MonoRenderer<T> :
+    public abstract class SerializedDataRenderer<T> :
         MonoBehaviour, IRenderer<T>
     {
         private T _data;
