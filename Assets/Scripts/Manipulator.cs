@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class Manipulator : MonoBehaviour
 {
-    [SerializeField] private Geometries _geom;
+    [SerializeField] private Main _main;
+    private IGeometries _geom;
     private PointRenderer _point;
     private UnityEngine.XR.InputDevice device;
 
     private void Start()
     {
+        _geom = _main.RuntimeGeometry;
         var devices = new List<UnityEngine.XR.InputDevice>();
         UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.LeftHand, devices);
 
