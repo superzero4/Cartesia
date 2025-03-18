@@ -1,54 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using Structures_Geométriques;
+using UnityEngine.Serialization;
 
-[Serializable]
-public class Indexes
+
+
+public class RelativeToAbsoluteGeometry : IGeometries
 {
-    public List<int> indexes;
-}
-
-[CreateAssetMenu(fileName = "Geometries", menuName = "Geometries")]
-public class Geometries : ScriptableObject, IGeometries
-{
-    [Header("Data")] [SerializeField] private List<Point> _points;
-
-    [SerializeField, Tooltip("Index of points in the list")]
-    private IndexedSegment[] _lines;
-
-    [SerializeField, Tooltip("Index of points in the list")]
-    private List<IndexedPolygon> _polygons;
-
-    [SerializeField, Tooltip("Index of points in the list")]
-    private List<IndexedPolyedre> _polyedres;
-
+    RelativeGeometry _relativeGeometry = null;
+    private List<Point> _points;
     public IEnumerable<Point> Points => _points;
     public int PointsCount => _points.Count;
 
-    public void Init()
+    public RelativeToAbsoluteGeometry(RelativeGeometry geom, float scale)
     {
-        foreach (var indexedSegment in _lines)
+        _relativeGeometry = geom;
+        _points = _relativeGeometry._points;
+        _points.ForEach(p =>
+        {
+            p.x *= scale;
+            p.y *= scale;
+            p.z *= scale;
+        });
+        foreach (var indexedSegment in _relativeGeometry._lines)
             indexedSegment.SetPoints(_points);
-        foreach (var indexedPolygon in _polygons)
+        foreach (var indexedPolygon in _relativeGeometry._polygons)
             indexedPolygon.SetPoints(_points);
-        foreach (var indexedPolyedre in _polyedres)
-            indexedPolyedre.SetPolygons(_polygons);
+        foreach (var indexedPolyedre in _relativeGeometry._polyedres)
+            indexedPolyedre.SetPolygons(_relativeGeometry._polygons);
     }
 
     public void AddPoint(Point p)
     {
-        _points.Add(p);
         foreach (var indexedSegment in _lines)
             indexedSegment.MarkDirty();
-
         foreach (var indexedPolygon in _polygons)
             indexedPolygon.MarkDirty();
         foreach (var indexedPolyedre in _polyedres)
             indexedPolyedre.MarkDirty();
     }
 
+    private IndexedSegment[] _lines => _relativeGeometry._lines;
+    private List<IndexedPolygon> _polygons => _relativeGeometry._polygons;
+    private List<IndexedPolyedre> _polyedres => _relativeGeometry._polyedres;
     //TODO add some kind of dirty on the _lines list to ensure the segment list are updated properly
     public IEnumerable<Segment> Segments => _lines.Select(indexedSegment => indexedSegment.Value);
     public int SegmentsCount => _lines.Length;
