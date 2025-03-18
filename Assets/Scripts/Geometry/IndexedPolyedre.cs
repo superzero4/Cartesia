@@ -13,6 +13,7 @@ public class IndexedPolyedre : Dirty<Indexes, Polyedre>
     public void SetPolygons(List<IndexedPolygon> faces)
     {
         _faces = faces;
+        this.MarkDirty();
     }
 
     public override Polyedre Compute(Indexes tSource)

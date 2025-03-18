@@ -14,8 +14,13 @@ public enum SelectionMode
 
 public class Manipulator : MonoBehaviour
 {
+<<<<<<< HEAD
     [SerializeField] private Geometries _geom;
     //Ajout des references pour les colisions
+=======
+    [SerializeField] private Main _main;
+    private IGeometries _geom;
+>>>>>>> 218f93b949d3e6a821aa4da2508da25b31570c0f
     private PointRenderer _point;
     private SegmentRenderer _line;
     private PolygonRenderer _face;
@@ -31,6 +36,7 @@ public class Manipulator : MonoBehaviour
 
     private void Start()
     {
+        _geom = _main.RuntimeGeometry;
         var devices = new List<UnityEngine.XR.InputDevice>();
         UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.LeftHand, devices);
 
