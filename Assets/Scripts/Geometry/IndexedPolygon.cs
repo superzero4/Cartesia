@@ -10,6 +10,7 @@ public class IndexedPolygon : Dirty<Indexes, Polygone>
     public void SetPoints(List<Point> points)
     {
         _points = points;
+        this.MarkDirty();
     }
 
     public override Polygone Compute(Indexes tSource)

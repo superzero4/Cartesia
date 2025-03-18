@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-class IndexedSegment : Dirty<Vector2Int, Segment>
+public class IndexedSegment : Dirty<Vector2Int, Segment>
 {
     List<Point> _points;
 
     public void SetPoints(List<Point> points)
     {
         _points = points;
+        this.MarkDirty();
     }
 
     public override Segment Compute(Vector2Int tSource)
