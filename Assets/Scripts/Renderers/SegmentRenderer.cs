@@ -7,8 +7,8 @@ namespace Renderers
     {
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private bool _showPoints = false;
-        [SerializeField] private PointRenderer _start;
-        [SerializeField] private PointRenderer _end;
+        [SerializeField] public PointRenderer _start;
+        [SerializeField] public PointRenderer _end;
         
         private Segment _data;
 
