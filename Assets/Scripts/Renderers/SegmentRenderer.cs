@@ -21,9 +21,9 @@ namespace Renderers
         public void RefreshView()
         {
             _lineRenderer.SetPositions(new Vector3[] { Data.start.ToVector3(), Data.end.ToVector3() });
-            _start.Data = Data.start;
+            _start.SetData(Data.start,-1);
             _start.RefreshView();
-            _end.Data = Data.end;
+            _end.SetData(Data.end,-1);
             _end.RefreshView();
             TogglePointVisibility(_showPoints);
         }
