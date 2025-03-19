@@ -10,5 +10,5 @@ public interface IGeometries
     int PolygonesCount { get; }
     int PointsCount { get; }
     void AddPoint(Point point);
-    void AddIndex(int geomPolygonesCount, int geomPointsCount);
+    void AddPointToPolygon(int polygoneIndex, int pointIndex);
 }

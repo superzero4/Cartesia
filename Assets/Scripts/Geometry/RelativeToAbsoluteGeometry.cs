@@ -52,10 +52,10 @@ public class RelativeToAbsoluteGeometry : IGeometries
     public IEnumerable<Polyedre> Polyedres => _polyedres.Select(indexedPolyedre => indexedPolyedre.Value);
     public int PolyedresCount => _polyedres.Count;
 
-    public void AddIndex(int count, int i)
+    public void AddPointToPolygon(int polygoneIndex, int pointIndex)
     {
-        var poly = _polygons[count];
-        poly.Data.indexes.Add(i);
+        var poly = _polygons[polygoneIndex];
+        poly.Data.indexes.Add(pointIndex);
         poly.MarkDirty();
         //We dirty all polygedre that could depends on this one
         foreach (var indexedPolyedre in _polyedres)
