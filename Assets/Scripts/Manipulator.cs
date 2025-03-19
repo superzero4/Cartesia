@@ -6,10 +6,11 @@ using UnityEngine.Serialization;
 
 public enum SelectionMode
 {
-    Point,
-    Line,
-    Face,
-    Object
+    Creation = 0,
+    Point = 1,
+    Line = 2,
+    Face = 3,
+    Object = 4
 }
 
 
@@ -61,6 +62,15 @@ public class Manipulator : MonoBehaviour
             var pos = transform.position;
             switch (_selectionMode)
             {
+                case SelectionMode.Creation:
+                    if (_release)
+                    {
+                        //TODO integrate that rather with another keybind and adding a point to the currently selected geometry instead of crating a new and adding it ot last polygon
+                        _geom.AddPoint(new Point(pos.x, pos.y, pos.z));
+                        _geom.AddPointToPolygon(_geom.PolygonesCount-1, _geom.PointsCount - 1);
+                        _release = false;
+                    }
+                    break;
                 case SelectionMode.Point:
                     if (_point != null)
                     {
