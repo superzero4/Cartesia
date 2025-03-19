@@ -7,6 +7,10 @@ public class IndexedSegment : Dirty<Vector2Int, Segment>
 {
     List<Point> _points;
 
+    public IndexedSegment(int x, int y)
+    {
+        Data = new Vector2Int(x, y);
+    }
     public void SetPoints(List<Point> points)
     {
         _points = points;
