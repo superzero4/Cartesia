@@ -14,8 +14,11 @@ public class RelativeGeometry
 {
     public RelativeGeometry(RelativeGeometry other)
     {
+        //Deep copying floats
         _points = other._points.Select(p => new Point(p.x, p.y, p.z)).ToList();
-        _lines = other._lines.Select(l => new IndexedSegment() { Data = l.Data }).ToArray();
+        //Deep copying components of a Vector2Int
+        _lines = other._lines.Select(l => new IndexedSegment(l.Data.x, l.Data.y)).ToArray();
+        //Deep copying in a new list, indexes=ints of the other list
         _polygons = other._polygons.Select(p =>
         {
             return new IndexedPolygon()
@@ -26,6 +29,7 @@ public class RelativeGeometry
                 }
             };
         }).ToList();
+        //Deep copying in a new list, indexes=ints of the other list
         _polyedres = other._polyedres.Select(p =>
         {
             return new IndexedPolyedre()
