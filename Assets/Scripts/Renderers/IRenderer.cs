@@ -7,18 +7,23 @@ namespace Renderers
 {
     public interface IRenderer<T>
     {
-        T Data { get; set; }
+        public int Index { get; }
 
+        T Data { get; }
+
+        public void SetData(T data, int index);
         public void RefreshView();
 
-        public void SetView(T Data)
+        public void SetView(T Data, int index)
         {
-            this.Data = Data;
+            SetData(Data, index);
             RefreshView();
         }
 
         public void ToggleVisibility(bool visible);
-        public static void InstantiateRenderersAndRefresh<Rend>(List<Rend> renderers, IEnumerable<T> data, Rend prefab, Transform parentOfNewRenderers)
+
+        public static void InstantiateRenderersAndRefresh<Rend>(List<Rend> renderers, IEnumerable<T> data, Rend prefab,
+            Transform parentOfNewRenderers)
             where Rend : MonoBehaviour, IRenderer<T>
         {
             int i = 0;
@@ -27,7 +32,7 @@ namespace Renderers
                 Rend renderer;
                 if (i >= renderers.Count)
                 {
-                    Assert.IsTrue(i-renderers.Count == 0);
+                    Assert.IsTrue(i - renderers.Count == 0);
                     renderer = GameObject.Instantiate(prefab, parentOfNewRenderers);
                     renderers.Add(renderer);
                 }
@@ -37,7 +42,7 @@ namespace Renderers
                 }
 
                 renderer.ToggleVisibility(true);
-                renderer.Data = d;
+                renderer.SetData(d, i);
                 renderer.RefreshView();
                 i++;
             }
@@ -52,17 +57,28 @@ namespace Renderers
     public abstract class SerializedDataRenderer<T> :
         MonoBehaviour, IRenderer<T>
     {
+        private int _index;
+
+        public int Index
+        {
+            get => _index;
+        }
+
         private T _data;
 
         public T Data
         {
             get => _data;
-            set => _data = value;
+        }
+
+        public void SetData(T data, int index)
+        {
+            _data = data;
+            _index = index;
         }
 
         public abstract void RefreshView();
 
         public abstract void ToggleVisibility(bool visible);
     }
-    
 }
