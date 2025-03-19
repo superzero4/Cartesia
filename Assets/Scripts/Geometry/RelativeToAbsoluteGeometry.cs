@@ -62,4 +62,11 @@ public class RelativeToAbsoluteGeometry : IGeometries
         foreach (var indexedPolyedre in _polyedres)
             indexedPolyedre.MarkDirty();
     }
+
+    public void AddSegment(int p1, int p2)
+    {
+        var newSeg = new IndexedSegment(p1, p2);
+        newSeg.SetPoints(_points);
+        _relativeGeometry._lines = _lines.Append(newSeg).ToArray();
+    }
 }
