@@ -12,6 +12,7 @@ namespace Tools
             var translation = Input.GetAxis("Vertical") * _speed;
             var rotation = Input.GetAxis("Horizontal") * _rotationSpeed;
             _manipulator.externalFakeInput = Input.GetKey(KeyCode.Space);
+            _manipulator.externalFakeInput2 = Input.GetKey(KeyCode.LeftShift);
             translation *= Time.deltaTime;
             rotation *= Time.deltaTime;
             transform.Translate(0, 0, translation);

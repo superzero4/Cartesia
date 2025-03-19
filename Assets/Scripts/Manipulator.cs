@@ -1,22 +1,20 @@
 using System;
 using System.Collections.Generic;
+using Control;
+using NUnit.Framework;
 using Renderers;
 using UnityEngine;
 using UnityEngine.Serialization;
-
-public enum SelectionMode
-{
-    Creation = 0,
-    Point = 1,
-    Line = 2,
-    Face = 3,
-    Object = 4
-}
+using UnityEngine.XR;
 
 
 public class Manipulator : MonoBehaviour
 {
+    [SerializeField] private SelectionModeControl _selection;
     [SerializeField] private Main _main;
+    [SerializeField] private Manipulator _other;
+    [SerializeField] private XRNode _hand;
+
     private IGeometries _geom;
     private PointRenderer _point;
     private SegmentRenderer _line;
@@ -26,7 +24,7 @@ public class Manipulator : MonoBehaviour
     private UnityEngine.XR.InputDevice device;
 
     //Ajout d'une variable SelectionMode
-    [SerializeField] private SelectionMode _selectionMode = SelectionMode.Object;
+    [SerializeField] private SelectionMode _selectionMode => _selection.SelectionMode;
 
     //Ajout Liste des points à selectionner pour bouger la ligne et une face
     private List<PointRenderer> _selectedPointsSegment = new List<PointRenderer>();
@@ -35,10 +33,11 @@ public class Manipulator : MonoBehaviour
 
     private void Start()
     {
+        Assert.IsTrue(_hand != _other._hand && _hand == XRNode.LeftHand || _hand == XRNode.RightHand);
         device = default;
         _geom = _main.RuntimeGeometry;
         var devices = new List<UnityEngine.XR.InputDevice>();
-        UnityEngine.XR.InputDevices.GetDevicesAtXRNode(UnityEngine.XR.XRNode.LeftHand, devices);
+        UnityEngine.XR.InputDevices.GetDevicesAtXRNode(_hand, devices);
 
         if (devices.Count == 1)
         {
@@ -53,67 +52,100 @@ public class Manipulator : MonoBehaviour
 
     private bool _release;
     [NonSerialized] public bool externalFakeInput;
+    [NonSerialized] public bool externalFakeInput2;
 
     private void Update()
     {
         Debug.Log("Point : " + (_point != null));
-        if (externalFakeInput || VRInput())
-        {
-            var pos = transform.position;
-            switch (_selectionMode)
-            {
-                case SelectionMode.Creation:
-                    if (_release)
-                    {
-                        //TODO integrate that rather with another keybind and adding a point to the currently selected geometry instead of crating a new and adding it ot last polygon
-                        _geom.AddPoint(new Point(pos.x, pos.y, pos.z));
-                        _geom.AddPointToPolygon(_geom.PolygonesCount-1, _geom.PointsCount - 1);
-                        _release = false;
-                    }
-                    break;
-                case SelectionMode.Point:
-                    if (_point != null)
-                    {
-                        _point.Data.Set(pos.x, pos.y, pos.z);
-                    }
+        var pos = transform.position;
+        if (externalFakeInput || VRInput(UnityEngine.XR.CommonUsages.triggerButton))
+            OnTrigger(pos);
 
-                    break;
-                case SelectionMode.Line:
-                    // Logique de manipulation d'une ligne
-                    //On selectionne d'abord la ligne et ses points
-                    if (_line != null)
-                    {
-                        _selectedPointsSegment = GetLinePoints();
-                        //On deplace la ligne
-                        MoveLine(pos);
-                    }
-
-                    break;
-
-                case SelectionMode.Face:
-                    // Logique de manipulation d'une face
-                    // Selection des points de la face à manipuler
-                    if (_face != null)
-                    {
-                        //_selectedPoints = GetFacePoints();
-                        // On deplace la face
-                        //MoveSelectedPoints(pos);
-                    }
-
-                    break;
-
-                case SelectionMode.Object:
-                    if (_object != null)
-                    {
-                        MoveObject(pos);
-                    }
-
-                    break;
-            }
-        }
+        var pos2 = _other.transform.position;
+        if (externalFakeInput2 || VRInput(UnityEngine.XR.CommonUsages.gripButton))
+            OnGrip(pos, pos2);
         else
-        {
             _release = true;
+    }
+
+    private void OnGrip(Vector3 pos, Vector3 pos2)
+    {
+        if (!_release) return;
+        var Point = new Point(pos.x, pos.y, pos.z);
+        switch (_selectionMode)
+        {
+            case SelectionMode.Point:
+                _geom.AddPoint(Point);
+                break;
+            case SelectionMode.Line:
+                _geom.AddPoint(Point);
+                _geom.AddPoint(new Point(pos2.x, pos2.y, pos2.z));
+                _geom.AddSegment(_geom.PointsCount - 2, _geom.PointsCount - 1);
+                //Point already got added, no additional treatement for these case, ww just add the point and cannot add it to a sublist or anything
+                break;
+            case SelectionMode.Face:
+                //Add the point to the face
+                _geom.AddPoint(Point);
+                if (_face != null)
+                {
+                    _geom.AddPointToPolygon(_face.Index, _geom.PointsCount - 1);
+                }
+                else
+                {
+                    //TODO create new face from 3 newly created points
+                }
+
+                break;
+            case SelectionMode.Object:
+                Debug.LogWarning("Trying to create something in object mode, this is not implemented");
+                //TODO create new triangular based pyramid or something or consider creating a new face if an object is selected
+
+                break;
+        }
+    }
+
+    private void OnTrigger(Vector3 pos)
+    {
+        switch (_selectionMode)
+        {
+            case SelectionMode.Point:
+                if (_point != null)
+                {
+                    _point.Data.Set(pos.x, pos.y, pos.z);
+                }
+
+                break;
+            case SelectionMode.Line:
+                // Logique de manipulation d'une ligne
+                //On selectionne d'abord la ligne et ses points
+                if (_line != null)
+                {
+                    _selectedPointsSegment = GetLinePoints();
+                    //On deplace la ligne
+                    MoveLine(pos);
+                }
+
+                break;
+
+            case SelectionMode.Face:
+                // Logique de manipulation d'une face
+                // Selection des points de la face à manipuler
+                if (_face != null)
+                {
+                    //_selectedPoints = GetFacePoints();
+                    // On deplace la face
+                    //MoveSelectedPoints(pos);
+                }
+
+                break;
+
+            case SelectionMode.Object:
+                if (_object != null)
+                {
+                    MoveObject(pos);
+                }
+
+                break;
         }
     }
 
@@ -151,10 +183,10 @@ public class Manipulator : MonoBehaviour
     //FIN DU CODE QUE J AI AJOUTE
 
 
-    private bool VRInput()
+    private bool VRInput(InputFeatureUsage<bool> button)
     {
         bool triggerValue = false;
-        if (device.isValid && device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue)
+        if (device.isValid && device.TryGetFeatureValue(button, out triggerValue) && triggerValue)
         {
             return true;
         }
