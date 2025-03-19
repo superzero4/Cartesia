@@ -47,32 +47,7 @@ public class Manipulator : MonoBehaviour
     }
     private bool _release;
 
-    /*
-    private void Update()
-    {
 
-        Debug.Log("Point : " + (_point != null));
-        if (Input.GetKey(KeyCode.Space) || VRInput())
-        {
-            var pos = transform.position;
-            if (_point != null)
-            {
-                _point.Data.Set(pos.x, pos.y, pos.z);
-            }
-            else if(_release)
-            {
-                _geom.AddPoint(new Point(pos.x, pos.y, pos.z));
-                //TODO
-                _geom.AddIndex(_geom.PolygonesCount, _geom.PointsCount - 1);
-                _release = false;
-            }
-        }
-        else
-        {
-            _release = true;
-        }
-    }
-    */
 
     private void Update()
     {
