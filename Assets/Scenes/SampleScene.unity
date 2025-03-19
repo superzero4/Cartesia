@@ -358,13 +358,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763952800}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.04}
   m_LocalScale: {x: 0.19999999, y: 0.19999994, z: 0.19999994}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 487832667}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!135 &763952802
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _showPolygons: 1
   _showPolyedres: 0
-  _scale: 0.1
+  _scale: 0.2
   _initState:
     _points:
     - x: 0
@@ -490,7 +490,7 @@ MonoBehaviour:
     - data:
         indexes: 00000000010000000200000003000000
     _polyedres: []
-  _initStateOverride: {fileID: 11400000, guid: ef7e6dddeee152542a689c32421e57b5, type: 2}
+  _initStateOverride: {fileID: 0}
   _pointPrefab: {fileID: 6903707738253923057, guid: 7544865149b4a044a8f654dacfaafe53, type: 3}
   _segmentPrefab: {fileID: 8261012624257011003, guid: aa74bcfc506dd76428312bfd86532add, type: 3}
   _polygonPrefab: {fileID: 5181627144418736077, guid: 235033c1d712c9345b77fdaef93be681, type: 3}
