@@ -33,6 +33,7 @@ public class RelativeToAbsoluteGeometry : IGeometries
 
     public void AddPoint(Point p)
     {
+        _points.Add(p);
         foreach (var indexedSegment in _lines)
             indexedSegment.MarkDirty();
         foreach (var indexedPolygon in _polygons)
