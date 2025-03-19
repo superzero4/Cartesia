@@ -9,27 +9,32 @@ using UnityEngine.Serialization;
 
 public class Main : MonoBehaviour
 {
-    [Header("Settings")] [SerializeField] private bool _showPolygons; 
+    [Header("Settings")] 
+    [SerializeField] private bool _showPolygons; 
     [SerializeField] private bool _showPolyedres;
-    [SerializeField,UnityEngine.Range(0.01f,3f)] private float _scale;
+    [SerializeField,Range(0.01f,3f)] private float _scale;
 
-    [FormerlySerializedAs("_geometries")] [Header("References")] [SerializeField,Tooltip("Used only if not overriden to define the initial state of the geometry")]
+    [Header("References")] 
+    [SerializeField,Tooltip("Used only if not overriden to define the initial state of the geometry")]
     private RelativeGeometry _initState;
-
     [SerializeField,Tooltip("Null means we use the serialized init state just above")] private RelativeGeometrySO _initStateOverride;
     private IGeometries _runtimeGeometry;
-    [Header("Prefabs")] [SerializeField] private PointRenderer _pointPrefab;
+    
+    [Header("Prefabs")] 
+    [SerializeField] private PointRenderer _pointPrefab;
     [SerializeField] private SegmentRenderer _segmentPrefab;
     [SerializeField] private PolygonRenderer _polygonPrefab;
     [SerializeField] private PolyedreRenderer _polyedrePrefab;
-    [Header("Existing")] [SerializeField] private List<PointRenderer> _pointRenderers;
+    
+    [Header("Existing")] 
+    [SerializeField] private List<PointRenderer> _pointRenderers;
     [SerializeField] private List<SegmentRenderer> _segmentRenderers;
     [SerializeField] private List<PolygonRenderer> _polygonRenderers;
     [SerializeField] private List<PolyedreRenderer> _polyedreRenderers;
 
     public IGeometries RuntimeGeometry => _runtimeGeometry;
 
-    private void Start()
+    private void Awake()
     {
         //We use deep copy to avoid modifying the original geometry in the scriptable object if we use it
         if(_initStateOverride != null)
