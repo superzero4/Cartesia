@@ -4,23 +4,16 @@ using UnityEngine.Assertions;
 
 namespace Renderers
 {
-    public class PolygonRenderer : MonoBehaviour, IRenderer<Polygone>
+    public class PolygonRenderer : SerializedDataRenderer<Polygone>
     {
         [SerializeField] private MeshFilter _filter;
-        private Polygone _data;
 
         private void Awake()
         {
             Assert.IsTrue(_filter.gameObject.GetComponent<MeshRenderer>() != null);
         }
 
-        public Polygone Data
-        {
-            get => _data;
-            set => _data = value;
-        }
-
-        public void RefreshView()
+        public override void RefreshView()
         {
             Mesh mesh = new Mesh();
             int initialCount = Data.sommets.Count;
@@ -50,7 +43,7 @@ namespace Renderers
             _filter.mesh = mesh;
         }
 
-        public void ToggleVisibility(bool visible)
+        public override void ToggleVisibility(bool visible)
         {
             _filter.gameObject.SetActive(visible);
         }
