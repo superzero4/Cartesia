@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec69c669dbff4745b4e19e8b9df89c97, type: 3}
+  m_Name: Cube
+  m_EditorClassIdentifier: 
+  _relativeGeometry:
+    _points:
+    - x: 0
+      y: 0
+      z: 0
+    - x: 0
+      y: 0
+      z: 1
+    - x: 0
+      y: 1
+      z: 1
+    - x: 0
+      y: 1
+      z: 0
+    - x: 1
+      y: 0
+      z: 0
+    - x: 1
+      y: 0
+      z: 1
+    - x: 1
+      y: 1
+      z: 1
+    - x: 1
+      y: 1
+      z: 0
+    _lines: []
+    _polygons:
+    - data:
+        indexes: 00000000010000000200000003000000
+    - data:
+        indexes: 04000000050000000600000007000000
+    - data:
+        indexes: 00000000010000000500000004000000
+    - data:
+        indexes: 03000000020000000600000007000000
+    - data:
+        indexes: 00000000040000000700000003000000
+    - data:
+        indexes: 01000000050000000600000002000000
+    _polyedres:
+    - data:
+        indexes: 000000000100000002000000030000000400000005000000

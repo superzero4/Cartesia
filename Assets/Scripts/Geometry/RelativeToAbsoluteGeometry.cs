@@ -13,15 +13,18 @@ public class RelativeToAbsoluteGeometry : IGeometries
     public IEnumerable<Point> Points => _points;
     public int PointsCount => _points.Count;
 
-    public RelativeToAbsoluteGeometry(RelativeGeometry geom, float scale)
+    public RelativeToAbsoluteGeometry(RelativeGeometry geom, float scale, Point offset)
     {
         _relativeGeometry = geom;
         _points = _relativeGeometry._points;
         _points.ForEach(p =>
         {
             p.x *= scale;
+            p.x += offset.x;
             p.y *= scale;
+            p.y += offset.y;
             p.z *= scale;
+            p.z += offset.z;
         });
         foreach (var indexedSegment in _relativeGeometry._lines)
             indexedSegment.SetPoints(_points);
