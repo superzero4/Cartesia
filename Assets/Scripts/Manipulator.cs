@@ -106,6 +106,35 @@ public class Manipulator : MonoBehaviour
 
     private void OnTrigger(Vector3 pos)
     {
+        Debug.Log("Point : " + (_point != null));
+        if (Input.GetKey(KeyCode.Space) || VRInput())
+        {
+            var pos = transform.position;
+            switch (_selectionMode)
+            {
+                case SelectionMode.Point:
+                    if (_point != null)
+                    {
+                        _point.Data.Set(pos.x, pos.y, pos.z);
+                    }
+                    //else if (_release)
+                    //{
+                    //    _geom.AddPoint(new Point(pos.x, pos.y, pos.z));
+                    //    //TODO
+                    //    _geom.AddIndex(_geom.PolygonesCount-1, _geom.PointsCount - 1);
+                    //    _release = false;
+                    //}
+            break;
+                case SelectionMode.Line:
+                    // Logique de manipulation d'une ligne
+                    //On selectionne d'abord la ligne et ses points
+                    if (_line != null)
+                    {
+                        _selectedPointsSegment = GetLinePoints();
+                        //On deplace la ligne
+                        MoveLine(pos);
+                    }
+                    break;
         switch (_selectionMode)
         {
             case SelectionMode.Point:
@@ -138,6 +167,16 @@ public class Manipulator : MonoBehaviour
                 }
 
                 break;
+                case SelectionMode.Face:
+                    // Logique de manipulation d'une face
+                    // Selection des points de la face à manipuler
+                    if (_face != null)
+                    {
+                        //_selectedPoints = GetFacePoints();
+                        // On deplace la face
+                        //MoveSelectedPoints(pos);
+                    }
+                    break;
 
             case SelectionMode.Object:
                 if (_object != null)
@@ -146,6 +185,13 @@ public class Manipulator : MonoBehaviour
                 }
 
                 break;
+                case SelectionMode.Object:
+                    if (_object != null)
+                    {
+                        MoveObject(pos);
+                    }
+                    break;
+            }
         }
     }
 
@@ -157,7 +203,7 @@ public class Manipulator : MonoBehaviour
         }
     }
 
-//DEBUT DU CODE QUE J AI AJOUTE
+    //DEBUT DU CODE QUE J AI AJOUTE
 
     // Fonction permettant le deplacement d'une ligne selectionnée
     private void MoveLine(Vector3 newPos)
@@ -197,7 +243,7 @@ public class Manipulator : MonoBehaviour
     // Ajout des differentes references pour les colisions
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out _point))
+        if (_point == null && other.TryGetComponent(out _point))
         {
             Debug.Log("Point found");
         }
@@ -215,7 +261,7 @@ public class Manipulator : MonoBehaviour
         }
         else
         {
-            _point = null;
+            //_point = null;
             _face = null;
             _line = null;
             _object = null;
@@ -224,7 +270,8 @@ public class Manipulator : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        _point = null;
+        if (_point != null && other.gameObject == _point.gameObject)
+            _point = null;
         _face = null;
         _line = null;
         _object = null;

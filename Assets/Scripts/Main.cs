@@ -14,6 +14,10 @@ public class Main : MonoBehaviour
     [SerializeField] private bool _showPolyedres;
     [SerializeField,Range(0.01f,3f)] private float _scale;
 
+    [SerializeField]
+    private Point _offset;
+
+    [FormerlySerializedAs("_geometries")] 
     [Header("References")] 
     [SerializeField,Tooltip("Used only if not overriden to define the initial state of the geometry")]
     private RelativeGeometry _initState;
@@ -39,7 +43,7 @@ public class Main : MonoBehaviour
         //We use deep copy to avoid modifying the original geometry in the scriptable object if we use it
         if(_initStateOverride != null)
             _initState = new RelativeGeometry(_initStateOverride.RelativeGeometry);
-        _runtimeGeometry = new RelativeToAbsoluteGeometry(_initState, _scale);
+        _runtimeGeometry = new RelativeToAbsoluteGeometry(_initState, _scale, _offset);
     }
 
     private void Update()
