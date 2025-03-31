@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Control;
 using NUnit.Framework;
 using Renderers;
@@ -20,6 +21,7 @@ public class Manipulator : MonoBehaviour
     private SegmentRenderer _line;
     private PolygonRenderer _face;
     private PolyedreRenderer _object;
+    private Vector3 _lastPos;
 
     private UnityEngine.XR.InputDevice device;
 
@@ -27,8 +29,6 @@ public class Manipulator : MonoBehaviour
     [SerializeField] private SelectionMode _selectionMode => _selection.SelectionMode;
 
     //Ajout Liste des points à selectionner pour bouger la ligne et une face
-    private List<PointRenderer> _selectedPointsSegment = new List<PointRenderer>();
-    private List<PolygonRenderer> _selectedPointsFace = new List<PolygonRenderer>();
 
 
     private void Start()
@@ -58,14 +58,16 @@ public class Manipulator : MonoBehaviour
     {
         Debug.Log("Point : " + (_point != null));
         var pos = transform.position;
+        var delta = pos - _lastPos;
         if (externalFakeInput || VRInput(UnityEngine.XR.CommonUsages.triggerButton))
-            OnTrigger(pos);
+            OnTrigger(delta);
 
         var pos2 = _other.transform.position;
         if (externalFakeInput2 || VRInput(UnityEngine.XR.CommonUsages.gripButton))
             OnGrip(pos, pos2);
         else
             _release = true;
+        _lastPos = pos;
     }
 
     private void OnGrip(Vector3 pos, Vector3 pos2)
@@ -114,25 +116,16 @@ public class Manipulator : MonoBehaviour
                 case SelectionMode.Point:
                     if (_point != null)
                     {
-                        _point.Data.Set(pos.x, pos.y, pos.z);
+                        _point.Data.Offset(pos.x, pos.y, pos.z);
                     }
-
-                    //else if (_release)
-                    //{
-                    //    _geom.AddPoint(new Point(pos.x, pos.y, pos.z));
-                    //    //TODO
-                    //    _geom.AddIndex(_geom.PolygonesCount-1, _geom.PointsCount - 1);
-                    //    _release = false;
-                    //}
                     break;
                 case SelectionMode.Line:
                     // Logique de manipulation d'une ligne
                     //On selectionne d'abord la ligne et ses points
                     if (_line != null)
                     {
-                        _selectedPointsSegment = GetLinePoints();
                         //On deplace la ligne
-                        MoveLine(pos);
+                        MovePoints(pos,GetLinePoints());
                     }
 
                     break;
@@ -141,9 +134,8 @@ public class Manipulator : MonoBehaviour
                     // Selection des points de la face à manipuler
                     if (_face != null)
                     {
-                        //_selectedPoints = GetFacePoints();
                         // On deplace la face
-                        //MoveSelectedPoints(pos);
+                        MovePoints(pos,_face.Data.sommets);
                     }
 
                     break;
@@ -151,7 +143,7 @@ public class Manipulator : MonoBehaviour
                 case SelectionMode.Object:
                     if (_object != null)
                     {
-                        MoveObject(pos);
+                        MovePoints(pos,_object.Data.Faces.SelectMany(f=>f.sommets));
                     }
 
                     break;
@@ -159,33 +151,24 @@ public class Manipulator : MonoBehaviour
         }
     }
 
-
-    private void MoveObject(Vector3 newPos)
-    {
-        foreach (var point in _geom.Points)
-        {
-            point.Set(newPos.x, newPos.y, newPos.z);
-        }
-    }
-
     //DEBUT DU CODE QUE J AI AJOUTE
 
     // Fonction permettant le deplacement d'une ligne selectionnée
-    private void MoveLine(Vector3 newPos)
+    private void MovePoints(Vector3 newPos, IEnumerable<Point> points)
     {
-        foreach (var point in _selectedPointsSegment)
+        foreach (var point in points)
         {
-            point.Data.Set(newPos.x, newPos.y, newPos.z);
+            point.Offset(newPos.x, newPos.y, newPos.z);
         }
     }
 
     // Ajout fonction pour récupérer les points d'une ligne
-    private List<PointRenderer> GetLinePoints()
+    private List<Point> GetLinePoints()
     {
-        List<PointRenderer> linePoints = new List<PointRenderer>();
+        List<Point> linePoints = new List<Point>();
 
-        linePoints.Add(_line._start);
-        linePoints.Add(_line._end);
+        linePoints.Add(_line._start.Data);
+        linePoints.Add(_line._end.Data);
 
         return linePoints;
     }
@@ -208,28 +191,41 @@ public class Manipulator : MonoBehaviour
     // Ajout des differentes references pour les colisions
     private void OnTriggerEnter(Collider other)
     {
-        if (_point == null && other.TryGetComponent(out _point))
+        if (_point == null)
         {
-            Debug.Log("Point found");
+            PointRenderer point = other.GetComponent<PointRenderer>();
+            if (point != null)
+            {
+                _point = point;
+                Debug.Log("Point found");
+            }
         }
-        else if (other.TryGetComponent(out _line))
+        else if (_line == null)
         {
-            Debug.Log("Line found");
+            var line = other.GetComponent<SegmentRenderer>();
+            if (line != null)
+            {
+                _line = line;
+                Debug.Log("Line found");
+            }
         }
-        else if (other.TryGetComponent(out _face))
+        else if (_face == null)
         {
-            Debug.Log("Face found");
+            var face = other.GetComponent<PolygonRenderer>();
+            if (face != null)
+            {
+                _face = face;
+                Debug.Log("Face found");
+            }
         }
-        else if (other.TryGetComponent(out _object))
+        else if (_object == null)
         {
-            Debug.Log("object found");
-        }
-        else
-        {
-            //_point = null;
-            _face = null;
-            _line = null;
-            _object = null;
+            var obj = other.GetComponent<PolyedreRenderer>();
+            if (obj != null)
+            {
+                _object = obj;
+                Debug.Log("object found");
+            }
         }
     }
 
@@ -237,8 +233,11 @@ public class Manipulator : MonoBehaviour
     {
         if (_point != null && other.gameObject == _point.gameObject)
             _point = null;
-        _face = null;
-        _line = null;
-        _object = null;
+        if (_face != null && other.gameObject == _face.gameObject)
+            _face = null;
+        if (_line != null && other.gameObject == _line.gameObject)
+            _line = null;
+        if (_object != null && other.gameObject == _object.gameObject)
+            _object = null;
     }
 }

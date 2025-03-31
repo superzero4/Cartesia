@@ -599,12 +599,14 @@ MonoBehaviour:
     - x: 1
       y: 0
       z: 0
-    _lines: []
+    _lines:
+    - data: {x: 0, y: 1}
+    - data: {x: 2, y: 3}
     _polygons:
     - data:
-        indexes: 00000000010000000200000003000000
+        indexes: 
     _polyedres: []
-  _initStateOverride: {fileID: 11400000, guid: 8308ed3e99e0c7849b1fbc2e31f023e7, type: 2}
+  _initStateOverride: {fileID: 0}
   _pointPrefab: {fileID: 6903707738253923057, guid: 7544865149b4a044a8f654dacfaafe53, type: 3}
   _segmentPrefab: {fileID: 8261012624257011003, guid: aa74bcfc506dd76428312bfd86532add, type: 3}
   _polygonPrefab: {fileID: 5181627144418736077, guid: 235033c1d712c9345b77fdaef93be681, type: 3}
