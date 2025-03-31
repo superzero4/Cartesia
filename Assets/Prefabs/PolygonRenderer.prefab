@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filter: {fileID: 3110272699847812774}
+  _coll: {fileID: 9029759000539897454}
 --- !u!33 &3110272699847812774
 MeshFilter:
   m_ObjectHideFlags: 0

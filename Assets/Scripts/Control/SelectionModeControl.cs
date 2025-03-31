@@ -14,7 +14,7 @@ namespace Control
 
     public class SelectionModeControl : MonoBehaviour
     {
-        private SelectionMode _selectionMode = SelectionMode.None;
+        [SerializeField] private SelectionMode _selectionMode = SelectionMode.None;
         public UnityEvent<string> OnChangeMode;
         public SelectionMode SelectionMode => _selectionMode;
 

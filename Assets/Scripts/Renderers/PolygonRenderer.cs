@@ -7,6 +7,7 @@ namespace Renderers
     public class PolygonRenderer : SerializedDataRenderer<Polygone>
     {
         [SerializeField] private MeshFilter _filter;
+        [SerializeField] private MeshCollider _coll;
 
         private void Awake()
         {
@@ -41,6 +42,7 @@ namespace Renderers
             mesh.triangles = triangles;
             mesh.RecalculateNormals();
             _filter.mesh = mesh;
+            _coll.sharedMesh = mesh;
         }
 
         public override void ToggleVisibility(bool visible)
