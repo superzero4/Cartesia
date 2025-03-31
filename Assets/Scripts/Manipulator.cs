@@ -107,9 +107,8 @@ public class Manipulator : MonoBehaviour
     private void OnTrigger(Vector3 pos)
     {
         Debug.Log("Point : " + (_point != null));
-        if (Input.GetKey(KeyCode.Space) || VRInput())
+        if (Input.GetKey(KeyCode.Space))
         {
-            var pos = transform.position;
             switch (_selectionMode)
             {
                 case SelectionMode.Point:
@@ -117,6 +116,7 @@ public class Manipulator : MonoBehaviour
                     {
                         _point.Data.Set(pos.x, pos.y, pos.z);
                     }
+
                     //else if (_release)
                     //{
                     //    _geom.AddPoint(new Point(pos.x, pos.y, pos.z));
@@ -124,7 +124,7 @@ public class Manipulator : MonoBehaviour
                     //    _geom.AddIndex(_geom.PolygonesCount-1, _geom.PointsCount - 1);
                     //    _release = false;
                     //}
-            break;
+                    break;
                 case SelectionMode.Line:
                     // Logique de manipulation d'une ligne
                     //On selectionne d'abord la ligne et ses points
@@ -134,39 +134,8 @@ public class Manipulator : MonoBehaviour
                         //On deplace la ligne
                         MoveLine(pos);
                     }
+
                     break;
-        switch (_selectionMode)
-        {
-            case SelectionMode.Point:
-                if (_point != null)
-                {
-                    _point.Data.Set(pos.x, pos.y, pos.z);
-                }
-
-                break;
-            case SelectionMode.Line:
-                // Logique de manipulation d'une ligne
-                //On selectionne d'abord la ligne et ses points
-                if (_line != null)
-                {
-                    _selectedPointsSegment = GetLinePoints();
-                    //On deplace la ligne
-                    MoveLine(pos);
-                }
-
-                break;
-
-            case SelectionMode.Face:
-                // Logique de manipulation d'une face
-                // Selection des points de la face à manipuler
-                if (_face != null)
-                {
-                    //_selectedPoints = GetFacePoints();
-                    // On deplace la face
-                    //MoveSelectedPoints(pos);
-                }
-
-                break;
                 case SelectionMode.Face:
                     // Logique de manipulation d'une face
                     // Selection des points de la face à manipuler
@@ -176,24 +145,20 @@ public class Manipulator : MonoBehaviour
                         // On deplace la face
                         //MoveSelectedPoints(pos);
                     }
+
                     break;
 
-            case SelectionMode.Object:
-                if (_object != null)
-                {
-                    MoveObject(pos);
-                }
-
-                break;
                 case SelectionMode.Object:
                     if (_object != null)
                     {
                         MoveObject(pos);
                     }
+
                     break;
             }
         }
     }
+
 
     private void MoveObject(Vector3 newPos)
     {
