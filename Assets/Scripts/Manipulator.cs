@@ -56,7 +56,8 @@ public class Manipulator : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Point : " + (_point != null));
+        Debug.Log("Line : " + (_line != null));
+        Debug.Log("Polyg : " + (_face != null));
         var pos = transform.position;
         var delta = pos - _lastPos;
         if (externalFakeInput || VRInput(UnityEngine.XR.CommonUsages.triggerButton))
@@ -73,6 +74,7 @@ public class Manipulator : MonoBehaviour
     private void OnGrip(Vector3 pos, Vector3 pos2)
     {
         if (!_release) return;
+        _release = false;
         var Point = new Point(pos.x, pos.y, pos.z);
         switch (_selectionMode)
         {
@@ -108,47 +110,44 @@ public class Manipulator : MonoBehaviour
 
     private void OnTrigger(Vector3 pos)
     {
-        Debug.Log("Point : " + (_point != null));
-        if (Input.GetKey(KeyCode.Space))
+        switch (_selectionMode)
         {
-            switch (_selectionMode)
-            {
-                case SelectionMode.Point:
-                    if (_point != null)
-                    {
-                        _point.Data.Offset(pos.x, pos.y, pos.z);
-                    }
-                    break;
-                case SelectionMode.Line:
-                    // Logique de manipulation d'une ligne
-                    //On selectionne d'abord la ligne et ses points
-                    if (_line != null)
-                    {
-                        //On deplace la ligne
-                        MovePoints(pos,GetLinePoints());
-                    }
+            case SelectionMode.Point:
+                if (_point != null)
+                {
+                    _point.Data.Offset(pos.x, pos.y, pos.z);
+                }
+                break;
+            case SelectionMode.Line:
+                // Logique de manipulation d'une ligne
+                //On selectionne d'abord la ligne et ses points
+                if (_line != null)
+                {
+                    //On deplace la ligne
+                    MovePoints(pos, GetLinePoints());
+                }
 
-                    break;
-                case SelectionMode.Face:
-                    // Logique de manipulation d'une face
-                    // Selection des points de la face à manipuler
-                    if (_face != null)
-                    {
-                        // On deplace la face
-                        MovePoints(pos,_face.Data.sommets);
-                    }
+                break;
+            case SelectionMode.Face:
+                // Logique de manipulation d'une face
+                // Selection des points de la face à manipuler
+                if (_face != null)
+                {
+                    // On deplace la face
+                    MovePoints(pos, _face.Data.sommets);
+                }
 
-                    break;
+                break;
 
-                case SelectionMode.Object:
-                    if (_object != null)
-                    {
-                        MovePoints(pos,_object.Data.Faces.SelectMany(f=>f.sommets));
-                    }
+            case SelectionMode.Object:
+                if (_object != null)
+                {
+                    MovePoints(pos, _object.Data.Faces.SelectMany(f => f.sommets));
+                }
 
-                    break;
-            }
+                break;
         }
+
     }
 
     //DEBUT DU CODE QUE J AI AJOUTE
@@ -200,16 +199,16 @@ public class Manipulator : MonoBehaviour
                 Debug.Log("Point found");
             }
         }
-        else if (_line == null)
+        if (_line == null)
         {
-            var line = other.GetComponent<SegmentRenderer>();
+            var line = other.transform.parent.GetComponent<SegmentRenderer>();
             if (line != null)
             {
                 _line = line;
                 Debug.Log("Line found");
             }
         }
-        else if (_face == null)
+        if (_face == null)
         {
             var face = other.GetComponent<PolygonRenderer>();
             if (face != null)
@@ -218,7 +217,7 @@ public class Manipulator : MonoBehaviour
                 Debug.Log("Face found");
             }
         }
-        else if (_object == null)
+        if (_object == null)
         {
             var obj = other.GetComponent<PolyedreRenderer>();
             if (obj != null)
@@ -235,7 +234,7 @@ public class Manipulator : MonoBehaviour
             _point = null;
         if (_face != null && other.gameObject == _face.gameObject)
             _face = null;
-        if (_line != null && other.gameObject == _line.gameObject)
+        if (_line != null && other.transform.parent.gameObject == _line.gameObject)
             _line = null;
         if (_object != null && other.gameObject == _object.gameObject)
             _object = null;
