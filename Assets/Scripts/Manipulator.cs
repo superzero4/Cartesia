@@ -56,8 +56,8 @@ public class Manipulator : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Line : " + (_line != null));
-        Debug.Log("Polyg : " + (_face != null));
+        //Debug.Log("Line : " + (_line != null));
+        //Debug.Log("Polyg : " + (_face != null));
         var pos = transform.position;
         var delta = pos - _lastPos;
         if (externalFakeInput || VRInput(UnityEngine.XR.CommonUsages.triggerButton))

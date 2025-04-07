@@ -8,10 +8,15 @@ public abstract class Element<T> : SerializedDataRenderer<T>
 {
     [SerializeField] private IndexText _text;
     public IndexText Text => _text;
+    
     public override void SetData(T data, int index)
     {
         base.SetData(data, index);
         _text.SetIndex(index);
+    }
+    public override void RefreshView()
+    {
+        // Implement any additional refresh logic here if needed
     }
     public override void ToggleVisibility(bool visible)
     {

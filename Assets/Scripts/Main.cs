@@ -45,13 +45,21 @@ public class Main : MonoBehaviour
         if (_initStateOverride != null)
             _initState = new RelativeGeometry(_initStateOverride.RelativeGeometry);
         _uiManager.SetGeometryToDisplay(_initState);
+        var _tools = new ToolsUI(_initState);
+        UiEvents.lineEvent.AddListener(_tools.UpdatePointInLine);
+        _runtimeGeometry = new RelativeToAbsoluteGeometry(_initState, _scale, _offset);
     }
 
     private void Update()
     {
         //TODO link with changes to the geometry
+        Refresh();
+    }
+
+    private void Refresh()
+    {
         _uiManager.RefreshAll();
-        _runtimeGeometry = new RelativeToAbsoluteGeometry(_initState, _scale, _offset);
+        _runtimeGeometry.Refresh();
         IRendererHelpers.InstantiateRenderersAndRefresh(_pointRenderers, _runtimeGeometry.Points, _pointPrefab,
             transform);
         IRendererHelpers.InstantiateRenderersAndRefresh(_segmentRenderers, _runtimeGeometry.Segments, _segmentPrefab,

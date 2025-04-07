@@ -12,4 +12,5 @@ public interface IGeometries
     void AddPoint(Point point);
     void AddPointToPolygon(int polygoneIndex, int pointIndex);
     void AddSegment(int p1, int p2);
+    public void Refresh();
 }

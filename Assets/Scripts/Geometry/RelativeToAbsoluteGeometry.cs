@@ -26,6 +26,11 @@ public class RelativeToAbsoluteGeometry : IGeometries
             p.z *= scale;
             p.z += offset.z;
         });
+        Refresh();
+    }
+
+    public void Refresh()
+    {
         foreach (var indexedSegment in _relativeGeometry._lines)
             indexedSegment.SetPoints(_points);
         foreach (var indexedPolygon in _relativeGeometry._polygons)
