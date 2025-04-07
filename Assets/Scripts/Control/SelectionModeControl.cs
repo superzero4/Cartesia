@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Control
@@ -14,9 +15,20 @@ namespace Control
 
     public class SelectionModeControl : MonoBehaviour
     {
-        private SelectionMode _selectionMode = SelectionMode.None;
-        public UnityEvent<string> OnChangeMode;
+        [SerializeField]
+        private SelectionMode _selectionMode = SelectionMode.Line;
+        public UnityEvent<SelectionMode> OnChangeMode;
         public SelectionMode SelectionMode => _selectionMode;
+
+        private void Start()
+        {
+            OnChangeMode.Invoke(_selectionMode);
+        }
+
+        private void OnValidate()
+        {
+            OnChangeMode.Invoke(_selectionMode);
+        }
 
         private void Update()
         {
@@ -41,7 +53,7 @@ namespace Control
             if (newMode != SelectionMode.None && newMode != _selectionMode)
             {
                 _selectionMode = newMode;
-                OnChangeMode.Invoke(_selectionMode.ToString());
+                OnChangeMode.Invoke(_selectionMode);
             }
         }
     }

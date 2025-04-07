@@ -10,7 +10,7 @@ namespace Renderers
         [SerializeField] List<PolygonRenderer> _polygoneRenderers = new List<PolygonRenderer>();
         public override void RefreshView()
         {
-            IRenderer<Polygone>.InstantiateRenderersAndRefresh(_polygoneRenderers, Data.Faces, _polygonPrefab, transform);
+            IRendererHelpers.InstantiateRenderersAndRefresh(_polygoneRenderers, Data.Faces, _polygonPrefab, transform);
         }
 
         public override void ToggleVisibility(bool visible)

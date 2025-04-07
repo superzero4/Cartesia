@@ -5,24 +5,9 @@ using UnityEngine.Assertions;
 
 namespace Renderers
 {
-    public interface IRenderer<T>
+    public static class IRendererHelpers
     {
-        public int Index { get; }
-
-        T Data { get; }
-
-        public void SetData(T data, int index);
-        public void RefreshView();
-
-        public void SetView(T Data, int index)
-        {
-            SetData(Data, index);
-            RefreshView();
-        }
-
-        public void ToggleVisibility(bool visible);
-
-        public static void InstantiateRenderersAndRefresh<Rend>(List<Rend> renderers, IEnumerable<T> data, Rend prefab,
+        public static void InstantiateRenderersAndRefresh<Rend,T>(List<Rend> renderers, IEnumerable<T> data, Rend prefab,
             Transform parentOfNewRenderers)
             where Rend : MonoBehaviour, IRenderer<T>
         {
@@ -53,6 +38,25 @@ namespace Renderers
             }
         }
     }
+    public interface IRenderer<T>
+    {
+        public int Index { get; }
+
+        T Data { get; }
+
+        public void SetData(T data, int index);
+        public void RefreshView();
+
+        public void SetView(T Data, int index)
+        {
+            SetData(Data, index);
+            RefreshView();
+        }
+
+        public void ToggleVisibility(bool visible);
+
+        
+    }
 
     public abstract class SerializedDataRenderer<T> :
         MonoBehaviour, IRenderer<T>
@@ -71,7 +75,7 @@ namespace Renderers
             get => _data;
         }
 
-        public void SetData(T data, int index)
+        public virtual void SetData(T data, int index)
         {
             _data = data;
             _index = index;
