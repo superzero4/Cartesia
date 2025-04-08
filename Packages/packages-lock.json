@@ -290,7 +290,7 @@
     },
     "com.unity.xr.openxr": {
       "version": "1.14.0",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.inputsystem": "1.6.3",
