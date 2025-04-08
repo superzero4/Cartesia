@@ -24,8 +24,6 @@ namespace Renderers
                     Assert.IsTrue(i - renderers.Count == 0);
                     renderer = GameObject.Instantiate(prefab, parentOfNewRenderers);
                     renderers.Add(renderer);
-                    if (additionalOnCreate != null)
-                        additionalOnCreate.Invoke(renderer, d);
                 }
                 else
                 {
@@ -35,6 +33,8 @@ namespace Renderers
                 renderer.ToggleVisibility(true);
                 renderer.SetData(d, i);
                 renderer.RefreshView();
+                if (additionalOnCreate != null)
+                    additionalOnCreate.Invoke(renderer, d);
                 i++;
             }
 
@@ -52,13 +52,7 @@ namespace Renderers
 
         public void SetData(T data, int index);
         public void RefreshView();
-
-        public void SetView(T Data, int index)
-        {
-            SetData(Data, index);
-            RefreshView();
-        }
-
+        
         public void ToggleVisibility(bool visible);
 
         

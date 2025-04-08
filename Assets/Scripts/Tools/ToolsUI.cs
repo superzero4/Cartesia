@@ -17,42 +17,39 @@ public class ToolsUI
         _relativeGeometry = relative_geometry;
     }
 
-    // S�lectionner la face suivante dans la liste
-    IndexedPolygon SelectNextFace(ref IndexedPolygon selectedFace)
-    {
-        int currentIndex = System.Array.IndexOf(_relativeGeometry._polygons.ToArray(), selectedFace);
-        int nextIndex =
-            (currentIndex + 1) % _relativeGeometry._polygons.ToArray().Length; // Boucle pour revenir au d�but
-        return _relativeGeometry._polygons[nextIndex];
-    }
-
+    // S�lectionner le point suivant dans la liste
     public void UpdatePointInLine(UiEvents.LineEventData arg0)
     {
-        UpdatePointInLine(arg0.objectIndex, arg0.isFirst, arg0.up);
-    }
-
-    // S�lectionner le point suivant dans la liste
-    void UpdatePointInLine(int lineIndex, bool isFirst, bool increment)
-    {
-        var line = _relativeGeometry._lines[lineIndex];
+        var line = _relativeGeometry._lines[arg0.objectIndex];
         var v2 = line.Data;
         var max = _relativeGeometry._points.Count;
-        v2.x = (v2.x + (isFirst ? (increment ? 1 : -1) : 0) + max) % max;
-        v2.y = (v2.y + (!isFirst ? (increment ? 1 : -1) : 0) + max) % max;
+        if (arg0.isFirst)
+            v2.x = CyclicIncrement(v2.x, arg0.up, max);
+        else
+            v2.y = CyclicIncrement(v2.y, arg0.up, max);
         line.Data = v2;
     }
 
-    void UpdatePointInPolygon(int polygonIndex, int pointIndex, bool increment)
+    private int CyclicIncrement(int x, bool increment, int max)
     {
-        var polygon = _relativeGeometry._polygons[polygonIndex];
-        polygon.Data.indexes[pointIndex] +=
-            (increment ? 1 : -1);
+        return (x + (increment ? 1 : -1) + max) % max;
     }
 
-    void UpdatePointInPolyedre(int polyedreIndex, int pointIndex, bool increment)
+    public void UpdatePointInPolygon(UiEvents.IndexListEventData arg0)
     {
-        var polyedre = _relativeGeometry._polyedres[polyedreIndex];
-        polyedre.Data.indexes[pointIndex] +=
-            (increment ? 1 : -1);
+        var polygon = _relativeGeometry._polygons[arg0.objectIndex];
+        var data = polygon.Data;
+        data.indexes[arg0.indexInObject] =
+            CyclicIncrement(polygon.Data.indexes[arg0.indexInObject], arg0.up, _relativeGeometry._points.Count);
+        polygon.Data = data;
+    }
+
+    public void UpdatePointInPolyedre(UiEvents.IndexListEventData arg0)
+    {
+        var polyedre = _relativeGeometry._polyedres[arg0.objectIndex];
+        var data = polyedre.Data;
+        data.indexes[arg0.indexInObject] =
+            CyclicIncrement(polyedre.Data.indexes[arg0.indexInObject], arg0.up, _relativeGeometry._points.Count);
+        polyedre.Data = data;
     }
 }

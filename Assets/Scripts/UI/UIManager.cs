@@ -19,31 +19,21 @@ public static class UiEvents
         public bool isFirst;
     }
 
-    public class PolygonEventData : EventDataBase
+    public class IndexListEventData : EventDataBase
     {
         public int indexInObject;
-    }
-
-    public class PolyedreEventData : PolygonEventData
-    {
-        public int indexInFace;
     }
 
     public class LineEvent : UnityEvent<LineEventData>
     {
     }
 
-    public class PolygonEvent : UnityEvent<PolygonEventData>
+    public class IndexListEvent : UnityEvent<IndexListEventData>
     {
     }
-
-    public class PolyedreEvent : UnityEvent<PolyedreEventData>
-    {
-    }
-
     public static LineEvent lineEvent = new();
-    public static PolygonEvent polygonEvent = new();
-    public static PolyedreEvent polyedreEvent = new();
+    public static IndexListEvent polygonEvent = new();
+    public static IndexListEvent polyedreEvent = new();
 }
 
 public class UIManager : MonoBehaviour

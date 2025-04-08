@@ -47,6 +47,8 @@ public class Main : MonoBehaviour
         _uiManager.SetGeometryToDisplay(_initState);
         var _tools = new ToolsUI(_initState);
         UiEvents.lineEvent.AddListener(_tools.UpdatePointInLine);
+        UiEvents.polygonEvent.AddListener(_tools.UpdatePointInPolygon);
+        UiEvents.polyedreEvent.AddListener(_tools.UpdatePointInPolyedre);
         _runtimeGeometry = new RelativeToAbsoluteGeometry(_initState, _scale, _offset);
     }
 

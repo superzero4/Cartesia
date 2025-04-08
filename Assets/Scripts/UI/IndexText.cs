@@ -13,7 +13,7 @@ public class IndexText : SerializedDataRenderer<int>
     public override void SetData(int data, int index)
     {
         base.SetData(data, index);
-        SetIndex(index);
+        SetIndex(data);
     }
     public override void RefreshView()
     {
@@ -22,6 +22,6 @@ public class IndexText : SerializedDataRenderer<int>
 
     public override void ToggleVisibility(bool visible)
     {
-        _text.gameObject.SetActive(visible);
+        gameObject.SetActive(visible);
     }
 }

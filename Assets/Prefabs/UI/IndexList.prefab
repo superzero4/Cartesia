@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 275
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -204,7 +204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -231,17 +231,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
---- !u!114 &972420303446251498 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 431506594328694637, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
-  m_PrefabInstance: {fileID: 613544991338911879}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3005d58913f842979daf938f12a20734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &8694179825464112080 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
@@ -361,47 +350,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4728008353781399104, guid: 024cd213786dfbc48aabae94e7fcb2f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7011532251714039635}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7075889291333054476, guid: 024cd213786dfbc48aabae94e7fcb2f0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5934771677919124156}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 024cd213786dfbc48aabae94e7fcb2f0, type: 3}
 --- !u!224 &472499632260545664 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4728008353781399104, guid: 024cd213786dfbc48aabae94e7fcb2f0, type: 3}
   m_PrefabInstance: {fileID: 5121689426281120448}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2675558980909658828 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7075889291333054476, guid: 024cd213786dfbc48aabae94e7fcb2f0, type: 3}
-  m_PrefabInstance: {fileID: 5121689426281120448}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5934771677919124156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2675558980909658828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b8a609dc5d24e4dade4a33afe79e2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _text: {fileID: 3112311569683046885}
-  _pointPrefab: {fileID: 972420303446251498}
-  _pointContainer: {fileID: 7611498604269929412}
---- !u!114 &3112311569683046885 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7792005292880274213, guid: 024cd213786dfbc48aabae94e7fcb2f0, type: 3}
-  m_PrefabInstance: {fileID: 5121689426281120448}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34b35612a6194fef8b280f90530721cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5855980970308681389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -488,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -606,7 +561,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 525
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -768,15 +723,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 905080398045893594, guid: 8524e5c659f8b20468a1bc7068d4ed88, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 905080398045893594, guid: 8524e5c659f8b20468a1bc7068d4ed88, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 905080398045893594, guid: 8524e5c659f8b20468a1bc7068d4ed88, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.00000023841858
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 905080398342055490, guid: 8524e5c659f8b20468a1bc7068d4ed88, type: 3}
       propertyPath: m_AnchorMax.x
@@ -820,7 +775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 905080399342349373, guid: 8524e5c659f8b20468a1bc7068d4ed88, type: 3}
       propertyPath: m_Size
-      value: 0.99999976
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 905080399342349373, guid: 8524e5c659f8b20468a1bc7068d4ed88, type: 3}
       propertyPath: m_Value
@@ -982,7 +937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 8080673344424127319, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
       propertyPath: m_AnchoredPosition.y
