@@ -1320,6 +1320,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8366950459759276802, guid: 02319b4b899bb4441ae5590b0cc3bb01, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00003905009
+      objectReference: {fileID: 0}
     - target: {fileID: 8454127042368575868, guid: 02319b4b899bb4441ae5590b0cc3bb01, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1470,7 +1474,7 @@ MonoBehaviour:
     - data:
         indexes: 00000000010000000200000004000000
     _polyedres: []
-  _initStateOverride: {fileID: 0}
+  _initStateOverride: {fileID: 11400000, guid: 8308ed3e99e0c7849b1fbc2e31f023e7, type: 2}
   _pointPrefab: {fileID: 6903707738253923057, guid: 7544865149b4a044a8f654dacfaafe53, type: 3}
   _segmentPrefab: {fileID: 8261012624257011003, guid: aa74bcfc506dd76428312bfd86532add, type: 3}
   _polygonPrefab: {fileID: 5181627144418736077, guid: 235033c1d712c9345b77fdaef93be681, type: 3}
@@ -1507,7 +1511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9378e4262b4967a5641c916264bc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectionMode: 3
+  _selectionMode: 4
   OnChangeMode:
     m_PersistentCalls:
       m_Calls: []
