@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Renderers;
 using UnityEngine;
 
@@ -8,7 +9,11 @@ namespace UI
     {
         [SerializeField] private IncrementalIndex _pointPrefab;
         [SerializeField] private Transform _pointContainer;
-        [SerializeField] private List<IncrementalIndex> _points;
+        private List<IncrementalIndex> _points = new();
+        public void Awake()
+        {
+            _points = _pointContainer.GetComponentsInChildren<IncrementalIndex>(true).ToList();
+        }
         public override void SetData(IndexedPolygon data, int index)
         {
             base.SetData(data, index);
@@ -17,7 +22,6 @@ namespace UI
 
         public override void RefreshView()
         {
-            
         }
     }
 }

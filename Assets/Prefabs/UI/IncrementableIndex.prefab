@@ -606,6 +606,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1960105426895673937, guid: 957d672b2b5106948ac0893aa0320e34, type: 3}
       insertIndex: -1
       addedObject: {fileID: 431506594328694637}
+    - targetCorrespondingSourceObject: {fileID: 1960105426895673937, guid: 957d672b2b5106948ac0893aa0320e34, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6840289384743492576}
+    - targetCorrespondingSourceObject: {fileID: 1960105426895673937, guid: 957d672b2b5106948ac0893aa0320e34, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 784088484005525837}
   m_SourcePrefab: {fileID: 100100000, guid: 957d672b2b5106948ac0893aa0320e34, type: 3}
 --- !u!114 &2114676539587366753 stripped
 MonoBehaviour:
@@ -638,6 +644,40 @@ MonoBehaviour:
   _text: {fileID: 2114676539587366753}
   _increment: {fileID: 148255598662393293}
   _decrement: {fileID: 427105157206693643}
+--- !u!114 &6840289384743492576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861861227019774575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 125
+  m_PreferredWidth: -1
+  m_PreferredHeight: 125
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &784088484005525837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861861227019774575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 2
+  m_AspectRatio: 1
 --- !u!224 &8080673344424127319 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4201405099799911273, guid: 957d672b2b5106948ac0893aa0320e34, type: 3}

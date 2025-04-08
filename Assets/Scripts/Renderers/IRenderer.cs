@@ -13,9 +13,12 @@ namespace Renderers
             where Rend : MonoBehaviour, IRenderer<T>
         {
             int i = 0;
+            if (renderers == null || prefab == null)
+                return;
             foreach (var d in data)
             {
                 Rend renderer;
+                
                 if (i >= renderers.Count)
                 {
                     Assert.IsTrue(i - renderers.Count == 0);

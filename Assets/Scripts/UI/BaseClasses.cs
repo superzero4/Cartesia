@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Renderers;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Element<T> : SerializedDataRenderer<T>
 {
@@ -27,7 +28,7 @@ public abstract class Element<T> : SerializedDataRenderer<T>
 public abstract class Tab<T> : MonoBehaviour
 {
     [SerializeField] private Element<T> _prefab;
-    [SerializeField] private Transform _parent;
+    [SerializeField] private LayoutGroup _parent;
     private List<Element<T>> _elements;
 
     private void Awake()
@@ -37,6 +38,6 @@ public abstract class Tab<T> : MonoBehaviour
 
     public void SetData(IEnumerable<T> data)
     {
-        IRendererHelpers.InstantiateRenderersAndRefresh(_elements, data, _prefab, _parent);
+        IRendererHelpers.InstantiateRenderersAndRefresh(_elements, data, _prefab, _parent.transform);
     }
 }
