@@ -1,3 +1,4 @@
+using Control;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +12,9 @@ public class Tab : MonoBehaviour
         get => _interactable.interactable;
         set => _interactable.interactable = value;
     }
-    public void Init(string text)
+    public void Init(SelectionMode selectionMode, SelectionModeControl selectionModeControl)
     {
-        _text.text = text;
+        _text.text = selectionMode.ToString();
+        _interactable.onClick.AddListener(() => selectionModeControl.SetSelectionMode(selectionMode));
     }
 }

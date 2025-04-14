@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
         _selection.OnChangeMode.AddListener(OnSelectionUpdated);
         values = Enum.GetValues(typeof(SelectionMode)).Cast<SelectionMode>().Skip(1).ToArray();
         for (int i = 0; i < _tabs.Length; i++)
-            _tabs[i].Init(values[i].ToString());
+            _tabs[i].Init(values[i], _selection) ;
     }
 
     public void SetGeometryToDisplay(RelativeGeometry geometry)
@@ -66,10 +66,11 @@ public class UIManager : MonoBehaviour
 
     public void OnSelectionUpdated(SelectionMode mode)
     {
+        
         for (int i = 0; i < _tabs.Length; i++)
         {
             bool active = i == ((int)mode) - 1;
-            _tabs[i].interactable = active;
+            //_tabs[i].interactable = active;
             _tabContents[i].gameObject.SetActive(active);
         }
 

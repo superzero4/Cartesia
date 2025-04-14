@@ -50,9 +50,14 @@ namespace Control
                 newMode = SelectionMode.Object;
             }
 
-            if (newMode != SelectionMode.None && newMode != _selectionMode)
+            SetSelectionMode(newMode);
+        }
+
+        public void SetSelectionMode(SelectionMode selectionMode)
+        {
+            if (selectionMode != SelectionMode.None && selectionMode != _selectionMode)
             {
-                _selectionMode = newMode;
+                _selectionMode = selectionMode;
                 OnChangeMode.Invoke(_selectionMode);
             }
         }
