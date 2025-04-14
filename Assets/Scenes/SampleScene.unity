@@ -3292,17 +3292,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8287689563956624584}
     m_Modifications:
-    - target: {fileID: 5055741220762618259, guid: f47804568be90204f80d47485db9e5df, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 5055741220762618259, guid: f47804568be90204f80d47485db9e5df, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 5055741220762618259, guid: f47804568be90204f80d47485db9e5df, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.46
+    - target: {fileID: 2728662460230941365, guid: f47804568be90204f80d47485db9e5df, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5055741220762618259, guid: f47804568be90204f80d47485db9e5df, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3367,18 +3359,6 @@ PrefabInstance:
     - target: {fileID: 6749076111829992297, guid: f47804568be90204f80d47485db9e5df, type: 3}
       propertyPath: _selectionMode
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8621254378547143496, guid: f47804568be90204f80d47485db9e5df, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8621254378547143496, guid: f47804568be90204f80d47485db9e5df, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8621254378547143496, guid: f47804568be90204f80d47485db9e5df, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
