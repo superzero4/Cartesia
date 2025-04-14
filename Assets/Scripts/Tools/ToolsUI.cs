@@ -41,22 +41,22 @@ public class ToolsUI
     public void UpdatePointInPolygon(UiEvents.IndexListEventData arg0)
     {
         var polygon = _relativeGeometry._polygons[arg0.objectIndex];
-        HandleIndexList(arg0, polygon.Data.indexes);
+        HandleIndexList(arg0, polygon.Data.indexes, _relativeGeometry._points.Count);
     }
 
     public void UpdatePointInPolyedre(UiEvents.IndexListEventData arg0)
     {
         var polyedre = _relativeGeometry._polyedres[arg0.objectIndex];
-        HandleIndexList(arg0, polyedre.Data.indexes);
+        HandleIndexList(arg0, polyedre.Data.indexes, _relativeGeometry._polygons.Count);
     }
 
-    private void HandleIndexList(UiEvents.IndexListEventData arg0, List<int> indexes)
+    private void HandleIndexList(UiEvents.IndexListEventData arg0, List<int> indexes, int max)
     {
         if (arg0.indexInObject < indexes.Count)
             indexes[arg0.indexInObject] =
-                CyclicIncrement(indexes[arg0.indexInObject], arg0.up);
-        else if (arg0.indexInObject == indexes.Count)//We create a new point, equal last + 1 by default
-            indexes.Add(CyclicIncrement(indexes[arg0.indexInObject - 1], true));
+                CyclicIncrement(indexes[arg0.indexInObject], arg0.up, max);
+        else if (arg0.indexInObject == indexes.Count) //We create a new point, equal last + 1 by default
+            indexes.Add(max - 1);
         else
             Assert.IsTrue(false, "Index out of range");
     }
