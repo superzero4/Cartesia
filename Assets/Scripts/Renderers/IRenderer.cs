@@ -9,7 +9,7 @@ namespace Renderers
     public static class IRendererHelpers
     {
         public static void InstantiateRenderersAndRefresh<Rend,T>(List<Rend> renderers, IEnumerable<T> data, Rend prefab,
-            Transform parentOfNewRenderers, Action<Rend, T> additionalOnCreate = null)
+            Transform parentOfNewRenderers, Action<Rend, T> additionalOnCreate = null, int offsetFromEndChild = 0)
             where Rend : MonoBehaviour, IRenderer<T>
         {
             int i = 0;

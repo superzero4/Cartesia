@@ -50,6 +50,7 @@ public abstract class ListIndexedElement<T> : Element<T>
 {
     [SerializeField] private IncrementalIndex _pointPrefab;
     [SerializeField] private Transform _pointContainer;
+    [SerializeField] private Button _addButton;
     private List<IncrementalIndex> _points;
 
     private void Awake()
@@ -68,6 +69,15 @@ public abstract class ListIndexedElement<T> : Element<T>
         if (_points == null)
             FindSamples();
         base.SetData(data, index);
+        _addButton.onClick.RemoveAllListeners();
+        _addButton.onClick.AddListener(() =>
+            {
+                Event().Invoke(new UiEvents.IndexListEventData()
+                {
+                    objectIndex = Index,
+                    indexInObject = Indexes(data).Count(),
+                });
+            });
         IRendererHelpers.InstantiateRenderersAndRefresh(_points, Indexes(data), _pointPrefab, _pointContainer,
             (point, i) =>
             {
@@ -78,6 +88,7 @@ public abstract class ListIndexedElement<T> : Element<T>
                 };
                 point.SetEvent(Event(), args);
             });
+        _addButton.transform.SetAsLastSibling();
     }
 
     protected abstract UnityEvent<UiEvents.IndexListEventData> Event();
