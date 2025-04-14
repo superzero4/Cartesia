@@ -77,4 +77,15 @@ public class RelativeToAbsoluteGeometry : IGeometries
         newSeg.SetPoints(_points);
         _relativeGeometry._lines = _lines.Append(newSeg).ToArray();
     }
+
+    public void AddPolygon()
+    {
+        var newFace = new IndexedPolygon();
+        _relativeGeometry._polygons.Add(newFace);
+    }
+    public void AddPolyedre()
+    {
+        var newFace = new IndexedPolyedre();
+        _relativeGeometry._polyedres.Add(newFace);
+    }
 }

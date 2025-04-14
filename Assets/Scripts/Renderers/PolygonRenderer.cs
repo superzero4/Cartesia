@@ -8,15 +8,18 @@ namespace Renderers
     {
         [SerializeField] private MeshFilter _filter;
         [SerializeField] private MeshCollider _coll;
-
+        Mesh mesh;
         private void Awake()
         {
+            mesh = new Mesh();
+            mesh.MarkDynamic();
+            _filter.mesh = mesh;
+            _coll.sharedMesh = mesh;
+            _coll.contactOffset = 0.1f;
             Assert.IsTrue(_filter.gameObject.GetComponent<MeshRenderer>() != null);
         }
-
         public override void RefreshView()
         {
-            Mesh mesh = new Mesh();
             int initialCount = Data.sommets.Count;
             Vector3[] vectices = new Vector3[initialCount + 1];
             int[] triangles = new int[initialCount * 3];
@@ -41,8 +44,7 @@ namespace Renderers
             mesh.vertices = vectices;
             mesh.triangles = triangles;
             mesh.RecalculateNormals();
-            _filter.mesh = mesh;
-            _coll.sharedMesh = mesh;
+            mesh.MarkModified();
         }
 
         public override void ToggleVisibility(bool visible)

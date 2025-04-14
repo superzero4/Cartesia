@@ -56,7 +56,7 @@ public class Manipulator : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log("Line : " + (_line != null));
+        //Debug.Log("Poyledre : " + (_object != null));
         //Debug.Log("Polyg : " + (_face != null));
         var pos = transform.position;
         var delta = pos - _lastPos;
@@ -75,35 +75,32 @@ public class Manipulator : MonoBehaviour
     {
         if (!_release) return;
         _release = false;
-        var Point = new Point(pos.x, pos.y, pos.z);
+        Point Point;
         switch (_selectionMode)
         {
             case SelectionMode.Point:
+
+                Point = new Point(pos.x, pos.y, pos.z);
                 _geom.AddPoint(Point);
                 break;
             case SelectionMode.Line:
+
+                Point = new Point(pos.x, pos.y, pos.z);
                 _geom.AddPoint(Point);
                 _geom.AddPoint(new Point(pos2.x, pos2.y, pos2.z));
                 _geom.AddSegment(_geom.PointsCount - 2, _geom.PointsCount - 1);
                 //Point already got added, no additional treatement for these case, ww just add the point and cannot add it to a sublist or anything
                 break;
             case SelectionMode.Face:
-                //Add the point to the face
-                _geom.AddPoint(Point);
-                if (_face != null)
-                {
-                    _geom.AddPointToPolygon(_face.Index, _geom.PointsCount - 1);
-                }
-                else
-                {
-                    //TODO create new face from 3 newly created points
-                }
+                //Add empty polygon
+                _geom.AddPolygon();
+
 
                 break;
             case SelectionMode.Object:
-                Debug.LogWarning("Trying to create something in object mode, this is not implemented");
+                //Debug.LogWarning("Trying to create something in object mode, this is not implemented");
                 //TODO create new triangular based pyramid or something or consider creating a new face if an object is selected
-
+                _geom.AddPolyedre();
                 break;
         }
     }
@@ -190,6 +187,23 @@ public class Manipulator : MonoBehaviour
     // Ajout des differentes references pour les colisions
     private void OnTriggerEnter(Collider other)
     {
+        Enter(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Exit(other);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Enter(collision.collider);
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        Exit(collision.collider);
+    }
+    private void Enter(Collider other)
+    {
         if (_point == null)
         {
             PointRenderer point = other.GetComponent<PointRenderer>();
@@ -219,7 +233,7 @@ public class Manipulator : MonoBehaviour
         }
         if (_object == null)
         {
-            var obj = other.GetComponent<PolyedreRenderer>();
+            var obj = other.transform.parent.GetComponent<PolyedreRenderer>();
             if (obj != null)
             {
                 _object = obj;
@@ -227,8 +241,7 @@ public class Manipulator : MonoBehaviour
             }
         }
     }
-
-    private void OnTriggerExit(Collider other)
+    private void Exit(Collider other)
     {
         if (_point != null && other.gameObject == _point.gameObject)
             _point = null;
@@ -236,7 +249,7 @@ public class Manipulator : MonoBehaviour
             _face = null;
         if (_line != null && other.transform.parent.gameObject == _line.gameObject)
             _line = null;
-        if (_object != null && other.gameObject == _object.gameObject)
+        if (_object != null && other.transform.parent.gameObject == _object.gameObject)
             _object = null;
     }
 }

@@ -10,7 +10,9 @@ public interface IGeometries
     int PolygonesCount { get; }
     int PointsCount { get; }
     void AddPoint(Point point);
-    void AddPointToPolygon(int polygoneIndex, int pointIndex);
+    //void AddPointToPolygon(int polygoneIndex, int pointIndex);
     void AddSegment(int p1, int p2);
+    void AddPolygon();
+    public void AddPolyedre();
     public void Refresh();
 }

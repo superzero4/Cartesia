@@ -6,7 +6,10 @@ using System.Linq;
 public class IndexedPolygon : Dirty<Indexes, Polygone>
 {
     List<Point> _points;
-
+    public IndexedPolygon()
+    {
+        Data = new();
+    }
     public void SetPoints(List<Point> points)
     {
         _points = points;

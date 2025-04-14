@@ -10,6 +10,11 @@ public class IndexedPolyedre : Dirty<Indexes, Polyedre>
 {
     private List<IndexedPolygon> _faces;
 
+    public IndexedPolyedre()
+    {
+        Data = new();
+    }
+
     public void SetPolygons(List<IndexedPolygon> faces)
     {
         _faces = faces;

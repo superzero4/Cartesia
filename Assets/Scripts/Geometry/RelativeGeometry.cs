@@ -7,6 +7,10 @@ using UnityEngine;
 public class Indexes
 {
     public List<int> indexes;
+    public Indexes()
+    {
+        indexes = new();
+    }
 }
 
 [Serializable]
@@ -52,4 +56,5 @@ public class RelativeGeometry
 
     [SerializeField, Tooltip("Index of points in the list")]
     public List<IndexedPolyedre> _polyedres;
+
 }
