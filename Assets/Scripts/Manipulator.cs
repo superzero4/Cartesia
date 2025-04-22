@@ -4,6 +4,7 @@ using System.Linq;
 using Control;
 using NUnit.Framework;
 using Renderers;
+using Sound;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR;
@@ -14,6 +15,7 @@ public class Manipulator : MonoBehaviour
     [SerializeField] private SelectionModeControl _selection;
     [SerializeField] private Main _main;
     [SerializeField] private Manipulator _other;
+    [SerializeField] private SoundByMovement _sound;
     [SerializeField] private XRNode _hand;
 
     private IGeometries _geom;
@@ -105,14 +107,15 @@ public class Manipulator : MonoBehaviour
         }
     }
 
-    private void OnTrigger(Vector3 pos)
+    private void OnTrigger(Vector3 delta)
     {
+        _sound.Offset(delta);
         switch (_selectionMode)
         {
             case SelectionMode.Point:
                 if (_point != null)
                 {
-                    _point.Data.Offset(pos.x, pos.y, pos.z);
+                    _point.Data.Offset(delta.x, delta.y, delta.z);
                 }
                 break;
             case SelectionMode.Line:
@@ -121,7 +124,7 @@ public class Manipulator : MonoBehaviour
                 if (_line != null)
                 {
                     //On deplace la ligne
-                    MovePoints(pos, GetLinePoints());
+                    MovePoints(delta, GetLinePoints());
                 }
 
                 break;
@@ -131,7 +134,7 @@ public class Manipulator : MonoBehaviour
                 if (_face != null)
                 {
                     // On deplace la face
-                    MovePoints(pos, _face.Data.sommets);
+                    MovePoints(delta, _face.Data.sommets);
                 }
 
                 break;
@@ -139,7 +142,7 @@ public class Manipulator : MonoBehaviour
             case SelectionMode.Object:
                 if (_object != null)
                 {
-                    MovePoints(pos, _object.Data.Faces.SelectMany(f => f.sommets));
+                    MovePoints(delta, _object.Data.Faces.SelectMany(f => f.sommets));
                 }
 
                 break;
@@ -210,6 +213,7 @@ public class Manipulator : MonoBehaviour
             if (point != null)
             {
                 _point = point;
+                _sound.Play();
                 Debug.Log("Point found");
             }
         }
@@ -219,12 +223,14 @@ public class Manipulator : MonoBehaviour
             if (line != null)
             {
                 _line = line;
+                _sound.Play();
                 Debug.Log("Line found");
             }
         }
         if (_face == null)
         {
             var face = other.GetComponent<PolygonRenderer>();
+            _sound.Play();
             if (face != null)
             {
                 _face = face;
