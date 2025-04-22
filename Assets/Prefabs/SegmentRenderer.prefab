@@ -104,7 +104,7 @@ MonoBehaviour:
   _lineRenderer: {fileID: 1146104831906460242}
   _width: 0.01
   _collider: {fileID: 8646191511275509726}
-  _showPoints: 1
+  _showPoints: 0
   _start: {fileID: 8679060599628526999}
   _end: {fileID: 614111004707349690}
 --- !u!120 &1146104831906460242

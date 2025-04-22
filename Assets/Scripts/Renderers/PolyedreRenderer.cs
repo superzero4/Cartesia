@@ -8,24 +8,29 @@ namespace Renderers
     public class PolyedreRenderer : SerializedDataRenderer<Polyedre>
     {
         [SerializeField] private PolygonRenderer _polygonPrefab;
+        [SerializeField] private bool _reinstantiatePolygons;
+
         [SerializeField] List<PolygonRenderer> _polygoneRenderers = new List<PolygonRenderer>();
         [SerializeField] private SphereCollider _collider;
         public Vector3 PolyedreCenter;
+
         public override void RefreshView()
         {
-            IRendererHelpers.InstantiateRenderersAndRefresh(_polygoneRenderers, Data.Faces, _polygonPrefab, transform);
+            if (_reinstantiatePolygons)
+                IRendererHelpers.InstantiateRenderersAndRefresh(_polygoneRenderers, Data.Faces, _polygonPrefab,
+                    transform);
             Vector3 TotalCenter = Vector3.zero;
             int TotalVertice = 0;
-            
+
             //Calcul du centre en faisant moyenne de toutes les coordonnees de ses sommets
-            foreach (var polygonRenderer in _polygoneRenderers)
+            foreach (var face in Data.Faces)
             {
-                TotalCenter += polygonRenderer.GravityCenter;
+                TotalCenter += face.GravityCenter;
                 TotalVertice++;
             }
+
             PolyedreCenter = TotalCenter / TotalVertice;
             _collider.transform.position = PolyedreCenter;
-
         }
 
         public override void ToggleVisibility(bool visible)
@@ -42,7 +47,7 @@ namespace Renderers
             {
                 _collider.gameObject.SetActive(true);
             }
-            
+
             else
             {
                 _collider.gameObject.SetActive(false);

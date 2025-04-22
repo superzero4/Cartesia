@@ -21,9 +21,9 @@ namespace Sound
         private void Update()
         {
             //Debug
-            RawSet((Vector3.one + new Vector3(Mathf.Sin(Time.time) * _multiplier.x,
-                Mathf.Sin(Time.time) * _multiplier.y,
-                Mathf.Sin(Time.time) * _multiplier.z)));
+            RawSet((Vector3.one + new Vector3(Mathf.Sin(Time.time),
+                Mathf.Sin(Time.time),
+                Mathf.Sin(Time.time))));
         }
 
         public void Play()
@@ -45,10 +45,9 @@ namespace Sound
         public void RawSet(Vector3 value)
         {
             _status = value;
-            Debug.Log("Set : " + _status);
-            _audioSource.panStereo = (_status.x-1)*2;
-            _audioSource.volume = _status.y/2f;
-            _audioSource.pitch = _z.Evaluate(_status.z);
+            _audioSource.panStereo = (_status.x - 1) * 2 * _multiplier.x;
+            _audioSource.volume = _status.y / 2f * _multiplier.y;
+            _audioSource.pitch = _z.Evaluate(_status.z) * _multiplier.z;
         }
     }
 }
