@@ -1,21 +1,25 @@
-﻿using Structures_Geométriques.Extensions;
+﻿using Control;
+using Structures_Geométriques.Extensions;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
+
 
 namespace Renderers
 {
     public class PolygonRenderer : SerializedDataRenderer<Polygone>
     {
         [SerializeField] private MeshFilter _filter;
-        [SerializeField] private MeshCollider _coll;
+        [SerializeField] private SphereCollider _collider;
+        public Vector3 GravityCenter;
+
+
         Mesh mesh;
         private void Awake()
         {
             mesh = new Mesh();
             mesh.MarkDynamic();
             _filter.mesh = mesh;
-            _coll.sharedMesh = mesh;
-            _coll.contactOffset = 0.1f;
             Assert.IsTrue(_filter.gameObject.GetComponent<MeshRenderer>() != null);
         }
         public override void RefreshView()
@@ -40,7 +44,9 @@ namespace Renderers
                 
             }
             //Gravity center, we assume the polygon is convex
-            vectices[initialCount] = center / initialCount;
+            GravityCenter= center / initialCount;
+            vectices[initialCount] = GravityCenter;
+            _collider.transform.position = GravityCenter;
             mesh.vertices = vectices;
             mesh.triangles = triangles;
             mesh.RecalculateNormals();
@@ -50,6 +56,19 @@ namespace Renderers
         public override void ToggleVisibility(bool visible)
         {
             _filter.gameObject.SetActive(visible);
+        }
+
+        public void Visibiliy(SelectionMode OnChangeMode)
+        {
+            if (OnChangeMode==SelectionMode.Face)
+            {
+                gameObject.SetActive(true);
+            }
+      
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

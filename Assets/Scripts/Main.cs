@@ -36,6 +36,7 @@ public class Main : MonoBehaviour
     [SerializeField] private List<SegmentRenderer> _segmentRenderers;
     [SerializeField] private List<PolygonRenderer> _polygonRenderers;
     [SerializeField] private List<PolyedreRenderer> _polyedreRenderers;
+    [SerializeField] private SelectionModeControl _selectionMode;
 
     public IGeometries RuntimeGeometry => _runtimeGeometry;
 
@@ -68,9 +69,14 @@ public class Main : MonoBehaviour
             transform);
         IRendererHelpers.InstantiateRenderersAndRefresh(_polygonRenderers,
             _showPolygons ? _runtimeGeometry.Polygones : Enumerable.Empty<Polygone>(), _polygonPrefab,
-            transform);
+            transform, (r, e) => {
+                _selectionMode.OnChangeMode.AddListener(r.Visibiliy);
+            });
         IRendererHelpers.InstantiateRenderersAndRefresh(_polyedreRenderers,
             _showPolyedres ? _runtimeGeometry.Polyedres : Enumerable.Empty<Polyedre>(), _polyedrePrefab,
-            transform);
+            transform, (r, e) => {
+                _selectionMode.OnChangeMode.AddListener(r.Visibiliy);
+            });
+        _selectionMode.Invoke();
     }
 }

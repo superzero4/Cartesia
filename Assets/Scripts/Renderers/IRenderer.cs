@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Control;
 using Renderers;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -24,6 +25,8 @@ namespace Renderers
                     Assert.IsTrue(i - renderers.Count == 0);
                     renderer = GameObject.Instantiate(prefab, parentOfNewRenderers);
                     renderers.Add(renderer);
+                    if (additionalOnCreate != null)
+                        additionalOnCreate.Invoke(renderer, d);
                 }
                 else
                 {
@@ -33,8 +36,7 @@ namespace Renderers
                 renderer.ToggleVisibility(true);
                 renderer.SetData(d, i);
                 renderer.RefreshView();
-                if (additionalOnCreate != null)
-                    additionalOnCreate.Invoke(renderer, d);
+              
                 i++;
             }
 
@@ -54,8 +56,7 @@ namespace Renderers
         public void RefreshView();
         
         public void ToggleVisibility(bool visible);
-
-        
+        void Visibiliy(SelectionMode OnChangeMode);
     }
 
     public abstract class SerializedDataRenderer<T> :
@@ -84,5 +85,10 @@ namespace Renderers
         public abstract void RefreshView();
 
         public abstract void ToggleVisibility(bool visible);
+
+        public void Visibiliy(SelectionMode OnChangeMode)
+        {
+      
+        }
     }
 }

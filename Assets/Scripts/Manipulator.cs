@@ -5,6 +5,7 @@ using Control;
 using NUnit.Framework;
 using Renderers;
 using Sound;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR;
@@ -229,7 +230,7 @@ public class Manipulator : MonoBehaviour
         }
         if (_face == null)
         {
-            var face = other.GetComponent<PolygonRenderer>();
+            var face = other.transform.parent.GetComponent<PolygonRenderer>();
             _sound.Play();
             if (face != null)
             {
@@ -251,7 +252,7 @@ public class Manipulator : MonoBehaviour
     {
         if (_point != null && other.gameObject == _point.gameObject)
             _point = null;
-        if (_face != null && other.gameObject == _face.gameObject)
+        if (_face != null && other.transform.parent.gameObject == _face.gameObject)
             _face = null;
         if (_line != null && other.transform.parent.gameObject == _line.gameObject)
             _line = null;

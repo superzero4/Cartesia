@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _showPolygons: 1
-  _showPolyedres: 0
+  _showPolyedres: 1
   _scale: 0.2
   _offset:
     x: -0.1
@@ -1154,6 +1154,7 @@ MonoBehaviour:
   _segmentRenderers: []
   _polygonRenderers: []
   _polyedreRenderers: []
+  _selectionMode: {fileID: 1569004438}
 --- !u!4 &1569004437
 Transform:
   m_ObjectHideFlags: 0

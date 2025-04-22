@@ -58,8 +58,13 @@ namespace Control
             if (selectionMode != SelectionMode.None && selectionMode != _selectionMode)
             {
                 _selectionMode = selectionMode;
-                OnChangeMode.Invoke(_selectionMode);
+                Invoke();
             }
+        }
+
+        internal void Invoke()
+        {
+            OnChangeMode.Invoke(_selectionMode);
         }
     }
 }
