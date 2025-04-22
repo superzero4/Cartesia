@@ -7,10 +7,9 @@ public class Tab : MonoBehaviour
 {
     [SerializeField] private Text _text;
     [SerializeField] private Button _interactable;
-    public bool interactable
+    public Button Interactable
     {
-        get => _interactable.interactable;
-        set => _interactable.interactable = value;
+        get => _interactable;
     }
     public void Init(SelectionMode selectionMode, SelectionModeControl selectionModeControl)
     {
