@@ -42,8 +42,8 @@ namespace Renderers
 
             //Gravity center, we assume the polygon is convex
 
-            vectices[initialCount] = Data.GravityCenter;
-            _collider.transform.position = Data.GravityCenter;
+            vectices[initialCount] = Data.GravityCenter.ToVector3();
+            _collider.transform.position = Data.GravityCenter.ToVector3();
             mesh.vertices = vectices;
             mesh.triangles = triangles;
             mesh.RecalculateNormals();

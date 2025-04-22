@@ -48,7 +48,8 @@ MonoBehaviour:
   _polygonPrefab: {fileID: 5181627144418736077, guid: 235033c1d712c9345b77fdaef93be681, type: 3}
   _reinstantiatePolygons: 0
   _polygoneRenderers: []
-  _collider: {fileID: 3736815455658045379}
+  _anchors: []
+  _mainAnchor: {fileID: 5137480473936456265}
   PolyedreCenter: {x: 0, y: 0, z: 0}
 --- !u!1001 &8535050922820606955
 PrefabInstance:
@@ -107,13 +108,19 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 144ee4a6c7e980549938ad02e92e4d91, type: 3}
---- !u!135 &3736815455658045379 stripped
-SphereCollider:
-  m_CorrespondingSourceObject: {fileID: 5019616154859631656, guid: 144ee4a6c7e980549938ad02e92e4d91, type: 3}
-  m_PrefabInstance: {fileID: 8535050922820606955}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4653043695422487383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3954293519988859068, guid: 144ee4a6c7e980549938ad02e92e4d91, type: 3}
   m_PrefabInstance: {fileID: 8535050922820606955}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5137480473936456265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3546981434762424738, guid: 144ee4a6c7e980549938ad02e92e4d91, type: 3}
+  m_PrefabInstance: {fileID: 8535050922820606955}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60514efcdf6d488598623fa10f6f4ff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

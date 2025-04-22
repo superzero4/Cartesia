@@ -9,8 +9,9 @@ namespace Renderers
 {
     public static class IRendererHelpers
     {
-        public static void InstantiateRenderersAndRefresh<Rend,T>(List<Rend> renderers, IEnumerable<T> data, Rend prefab,
-            Transform parentOfNewRenderers, Action<Rend, T> additionalOnCreate = null, int offsetFromEndChild = 0)
+        public static void InstantiateRenderersAndRefresh<Rend, T>(List<Rend> renderers, IEnumerable<T> data,
+            Rend prefab,
+            Transform parentOfNewRenderers, Action<Rend, T> additionalOnCreate = null)
             where Rend : MonoBehaviour, IRenderer<T>
         {
             int i = 0;
@@ -19,7 +20,7 @@ namespace Renderers
             foreach (var d in data)
             {
                 Rend renderer;
-                
+
                 if (i >= renderers.Count)
                 {
                     Assert.IsTrue(i - renderers.Count == 0);
@@ -36,7 +37,7 @@ namespace Renderers
                 renderer.ToggleVisibility(true);
                 renderer.SetData(d, i);
                 renderer.RefreshView();
-              
+
                 i++;
             }
 
@@ -46,6 +47,7 @@ namespace Renderers
             }
         }
     }
+
     public interface IRenderer<T>
     {
         public int Index { get; }
@@ -54,7 +56,7 @@ namespace Renderers
 
         public void SetData(T data, int index);
         public void RefreshView();
-        
+
         public void ToggleVisibility(bool visible);
         void Visibiliy(SelectionMode OnChangeMode);
     }
@@ -88,7 +90,6 @@ namespace Renderers
 
         public void Visibiliy(SelectionMode OnChangeMode)
         {
-      
         }
     }
 }

@@ -1,28 +1,25 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using Structures_Geométriques.Extensions;
 
 [Serializable]
 public struct Polygone
 {
     public List<Point> sommets; // Liste des sommets du polygone
-    private Vector3 _gravityCenter;
+    private Point _gravityCenter;
 
     public Polygone(IEnumerable<Point> sommetsI)
     {
         this.sommets = new List<Point>(sommetsI);
-        Vector3 center = Vector3.zero;
+        _gravityCenter = new Point(0,0,0);
         for (int i = 0; i < sommets.Count; i++)
         {
-            center += sommets[i].ToVector3();
+            _gravityCenter = new Point(_gravityCenter.x + sommets[i].x, _gravityCenter.y + sommets[i].y, _gravityCenter.z + sommets[i].z);
         }
 
-        _gravityCenter = center / sommets.Count;
+        _gravityCenter = new Point(_gravityCenter.x / sommets.Count, _gravityCenter.y / sommets.Count, _gravityCenter.z / sommets.Count);
     }
 
-    public Vector3 GravityCenter
+    public Point GravityCenter
     {
         get { return _gravityCenter; }
     }
