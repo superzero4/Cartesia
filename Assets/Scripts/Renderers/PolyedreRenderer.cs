@@ -40,12 +40,12 @@ namespace Renderers
         {
             if (OnChangeMode == SelectionMode.Object)
             {
-                gameObject.SetActive(true);
+                _collider.gameObject.SetActive(true);
             }
             
             else
             {
-                gameObject.SetActive(false);
+                _collider.gameObject.SetActive(false);
             }
         }
     }
