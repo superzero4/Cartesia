@@ -174,7 +174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7611498603565168363, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
       propertyPath: m_Value
-      value: 1.000004
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7611498604269929412, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
       propertyPath: m_SizeDelta.x
@@ -207,6 +207,10 @@ PrefabInstance:
     - target: {fileID: 7611498604779469972, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611498605083254506, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
+      propertyPath: m_Value
+      value: -0.0000004161488
       objectReference: {fileID: 0}
     - target: {fileID: 8661967244633856911, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
       propertyPath: m_AnchorMax.y
@@ -256,17 +260,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3329216564100303812}
   m_SourcePrefab: {fileID: 100100000, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
---- !u!114 &330382412012286287 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 972420303446251498, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
-  m_PrefabInstance: {fileID: 714799177209341605}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3005d58913f842979daf938f12a20734, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2511421938912855872 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3112311569683046885, guid: 60146b18618288e4b9aa9f25e5494879, type: 3}
@@ -296,7 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 2511421938912855872}
-  _pointPrefab: {fileID: 330382412012286287}
+  _pointPrefab: {fileID: 431506594328694637, guid: b1226f76bcd3092409f867273ecb4918, type: 3}
   _pointContainer: {fileID: 6938362263395493217}
   _addButton: {fileID: 4801957374005129949}
 --- !u!114 &4801957374005129949 stripped

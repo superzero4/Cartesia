@@ -72,19 +72,21 @@ public abstract class ListIndexedElement<T> : Element<T>
         _addButton.onClick.RemoveAllListeners();
         _addButton.onClick.AddListener(() =>
             {
+                int cnt2 = Indexes(data).Count();
                 Event().Invoke(new UiEvents.IndexListEventData()
                 {
-                    objectIndex = Index,
-                    indexInObject = Indexes(data).Count(),
+                    objectIndex = index,
+                    indexInObject = cnt2,
                 });
             });
-        IRendererHelpers.InstantiateRenderersAndRefresh(_points, Indexes(data), _pointPrefab, _pointContainer,
+        int cnt = 0;
+        IRendererHelpers.InstantiateRenderersAndRefresh(_points, Indexes(data), _pointPrefab, _pointContainer,null,
             (point, i) =>
             {
                 var args = new UiEvents.IndexListEventData()
                 {
-                    objectIndex = Index,
-                    indexInObject = point.Index,
+                    objectIndex = index,
+                    indexInObject = cnt++,
                 };
                 point.SetEvent(Event(), args);
             });

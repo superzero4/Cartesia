@@ -855,6 +855,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ManipulatorD
       objectReference: {fileID: 0}
+    - target: {fileID: 5134437485319708883, guid: f47804568be90204f80d47485db9e5df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6749076111829992297, guid: f47804568be90204f80d47485db9e5df, type: 3}
       propertyPath: _hand
       value: 4
@@ -1203,7 +1207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9378e4262b4967a5641c916264bc6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectionMode: 4
+  _selectionMode: 3
   OnChangeMode:
     m_PersistentCalls:
       m_Calls: []
@@ -1755,8 +1759,8 @@ Camera:
   m_GameObject: {fileID: 511316888706953684}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

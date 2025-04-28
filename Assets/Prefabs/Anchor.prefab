@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 3201956278842705180, guid: 7544865149b4a044a8f654dacfaafe53, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 22788929071467060, guid: 147ae308eec018b40a7b312ae58f44c7, type: 3}
+      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 6014853443829326735, guid: 7544865149b4a044a8f654dacfaafe53, type: 3}
       propertyPath: m_Name
       value: Anchor

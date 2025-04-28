@@ -11,7 +11,8 @@ namespace Renderers
     {
         public static void InstantiateRenderersAndRefresh<Rend, T>(List<Rend> renderers, IEnumerable<T> data,
             Rend prefab,
-            Transform parentOfNewRenderers, Action<Rend, T> additionalOnCreate = null)
+            Transform parentOfNewRenderers, Action<Rend, T> additionalOnCreate = null,
+             Action<Rend, T> additional = null)
             where Rend : MonoBehaviour, IRenderer<T>
         {
             int i = 0;
@@ -33,7 +34,8 @@ namespace Renderers
                 {
                     renderer = renderers[i];
                 }
-
+                if (additional != null)
+                    additional.Invoke(renderer, d);
                 renderer.ToggleVisibility(true);
                 renderer.SetData(d, i);
                 renderer.RefreshView();
