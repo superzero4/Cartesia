@@ -15,20 +15,22 @@ namespace Sound
             _audioSource.loop = true;
             _audioSource.playOnAwake = false;
             _audioSource.mute = false;
-            _audioSource.Play();
+            //_audioSource.Play();
         }
 
         private void Update()
         {
             //Debug
-            RawSet((Vector3.one + new Vector3(Mathf.Sin(Time.time),
-                Mathf.Sin(Time.time),
-                Mathf.Sin(Time.time))));
+            //RawSet((Vector3.one + new Vector3(Mathf.Sin(Time.time),
+            //    Mathf.Sin(Time.time),
+            //    Mathf.Sin(Time.time))));
         }
 
         public void Play()
         {
-            RawSet(Vector3.one / 2f);
+            if (_audioSource.isPlaying)
+                return;
+            RawSet(new Vector3(0, 1f, 0f));
             _audioSource.Play();
         }
 
@@ -39,15 +41,15 @@ namespace Sound
 
         public void Offset(Vector3 offset)
         {
-            RawSet(_status + offset);
+            RawSet(_status + new Vector3(_multiplier.x * offset.x, _multiplier.y * offset.y, _multiplier.z * offset.z));
         }
 
         public void RawSet(Vector3 value)
         {
             _status = value;
-            _audioSource.panStereo = (_status.x - 1) * 2 * _multiplier.x;
-            _audioSource.volume = _status.y / 2f * _multiplier.y;
-            _audioSource.pitch = _z.Evaluate(_status.z) * _multiplier.z;
+            //_audioSource.reverbZoneMix = (_status.x + 1) / 2 * _multiplier.x;
+            _audioSource.volume = (_status.y / 2f);
+            _audioSource.pitch = new Vector2(_status.x, _status.z).magnitude + 1;
         }
     }
 }

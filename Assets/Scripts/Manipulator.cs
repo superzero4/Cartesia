@@ -65,12 +65,16 @@ public class Manipulator : MonoBehaviour
         var delta = pos - _lastPos;
         if (externalFakeInput || VRInput(UnityEngine.XR.CommonUsages.triggerButton))
             OnTrigger(delta);
+        else
+            _sound.Stop();
 
         var pos2 = _other.transform.position;
         if (externalFakeInput2 || VRInput(UnityEngine.XR.CommonUsages.gripButton))
             OnGrip(pos, pos2);
         else
+        {
             _release = true;
+        }
         _lastPos = pos;
     }
 
@@ -116,6 +120,7 @@ public class Manipulator : MonoBehaviour
             case SelectionMode.Point:
                 if (_point != null)
                 {
+                    _sound.Play();
                     _point.Data.Offset(delta.x, delta.y, delta.z);
                 }
                 break;
@@ -125,6 +130,7 @@ public class Manipulator : MonoBehaviour
                 if (_line != null)
                 {
                     //On deplace la ligne
+                    _sound.Play();
                     MovePoints(delta, GetLinePoints());
                 }
 
@@ -134,6 +140,7 @@ public class Manipulator : MonoBehaviour
                 // Selection des points de la face à manipuler
                 if (_face != null)
                 {
+                    _sound.Play();
                     // On deplace la face
                     MovePoints(delta, _face.Data.sommets);
                 }
@@ -143,7 +150,8 @@ public class Manipulator : MonoBehaviour
             case SelectionMode.Object:
                 if (_object != null)
                 {
-                    MovePoints(delta, _object.Data.Faces.SelectMany(f => f.sommets));
+                    _sound.Play();
+                    MovePoints(delta, _object.Data.Faces.SelectMany(f => f.sommets).Distinct());
                 }
 
                 break;
@@ -214,7 +222,6 @@ public class Manipulator : MonoBehaviour
             if (point != null)
             {
                 _point = point;
-                _sound.Play();
                 Debug.Log("Point found");
             }
         }
@@ -224,14 +231,12 @@ public class Manipulator : MonoBehaviour
             if (line != null)
             {
                 _line = line;
-                _sound.Play();
                 Debug.Log("Line found");
             }
         }
         if (_face == null)
         {
             var face = other.transform.parent.GetComponent<PolygonRenderer>();
-            _sound.Play();
             if (face != null)
             {
                 _face = face;
@@ -251,12 +256,24 @@ public class Manipulator : MonoBehaviour
     private void Exit(Collider other)
     {
         if (_point != null && other.gameObject == _point.gameObject)
+        {
+            _sound.Stop();
             _point = null;
+        }
         if (_face != null && other.transform.parent.gameObject == _face.gameObject)
+        {
+            _sound.Stop();
             _face = null;
+        }
         if (_line != null && other.transform.parent.gameObject == _line.gameObject)
+        {
+            _sound.Stop();
             _line = null;
+        }
         if (_object != null && other.transform.parent.gameObject == _object.gameObject)
+        {
+            _sound.Stop();
             _object = null;
+        }
     }
 }

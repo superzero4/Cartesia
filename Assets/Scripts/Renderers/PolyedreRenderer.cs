@@ -23,7 +23,9 @@ namespace Renderers
                 IRendererHelpers.InstantiateRenderersAndRefresh(_polygoneRenderers, Data.Faces, _polygonPrefab,
                     transform);
             else
-                IRendererHelpers.InstantiateRenderersAndRefresh(_anchors, Data.Faces.Select(f => f.GravityCenter),
+                IRendererHelpers.InstantiateRenderersAndRefresh(_anchors, Data.Faces.Select(f => {
+                    return f.GravityCenter;
+                    }),
                     _mainAnchor, transform);
             Vector3 TotalCenter = Vector3.zero;
             int TotalVertice = 0;

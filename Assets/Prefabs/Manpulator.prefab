@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 3792977583007800266}
-  _multiplier: {x: 1, y: 1, z: 1}
+  _multiplier: {x: 5, y: 5, z: 5}
   _z:
     serializedVersion: 2
     m_Curve:
@@ -184,7 +184,7 @@ AudioSource:
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -305,7 +305,7 @@ MonoBehaviour:
   _selection: {fileID: 0}
   _main: {fileID: 0}
   _other: {fileID: 0}
-  _sound: {fileID: 0}
+  _sound: {fileID: 3561682780632267505}
   _hand: 0
 --- !u!135 &2728662460230941365
 SphereCollider:
